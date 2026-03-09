@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Freespin & Event Mahjong Ways</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: 
+                url('https://cdn.areabermain.club/assets/cdn/az6/2025/07/31/20250731/eeb91f9b1f7b3247242ccba997460e8b/linetogel-bg-17agustus2025.jpg') center/cover fixed,
+                radial-gradient(circle at 10% 20%, rgba(15, 32, 39, 0.85) 0%, rgba(32, 58, 67, 0.85) 50%, rgba(44, 83, 100, 0.85) 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        /* Toggle Switch Styling */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .toggle-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .toggle-label {
+            margin-right: 15px;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #f44336;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #4caf50;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* ID Display Section - Tampilan sederhana di bagian bawah */
+        .id-display-section {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            transition: transform 0.3s;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .id-display-section.active {
+            display: block;
+        }
+        
+        .id-display-section:hover {
+            transform: translateY(-3px);
+        }
+        
+        .id-display-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #4a90e2, #2196f3);
+        }
+        
+        .id-display-section h3 {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .id-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #4a90e2;
+            text-shadow: 0 2px 15px rgba(74, 144, 226, 0.5);
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            text-align: center;
+            word-break: break-all;
+            padding: 8px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Sisa CSS tetap sama seperti sebelumnya */
+        .floating-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            filter: blur(20px);
+            animation: float 15s infinite ease-in-out;
+        }
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 5s;
+        }
+        .floating-element:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            top: 30%;
+            left: 70%;
+            animation-delay: 10s;
+        }
+        .floating-element:nth-child(4) {
+            width: 150px;
+            height: 150px;
+            top: 80%;
+            left: 10%;
+            animation-delay: 15s;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 0 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+            z-index: 1;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, #4a90e2, #9c27b0, #2196f3);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+        }
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(156, 39, 176, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #4a90e2, transparent);
+        }
+        h1 {
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 2.4rem;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(to right, #4a90e2, #9c27b0, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, #4a90e2, #9c27b0, #2196f3);
+            border-radius: 3px;
+        }
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Logo untuk Freespin dan Event */
+        .section-logo {
+            text-align: center;
+            margin: 20px 0 30px;
+            animation: pulse 3s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        .section-logo img {
+            max-width: 450px;
+            width: 90%;
+            border-radius: 16px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(255, 215, 0, 0.4);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+        .section-logo img:hover {
+            transform: scale(1.03);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* Styling untuk tab utama */
+        .main-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 16px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .main-tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .main-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #4a90e2, #2196f3);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .main-tab.active::before {
+            opacity: 1;
+        }
+        .main-tab:not(.active) {
+            background: transparent;
+            color: #b0b0b0;
+        }
+        .main-tab:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+        .content-section.active {
+            display: block;
+        }
+        
+        .input-section {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            z-index: 2;
+        }
+        .input-section:hover {
+            transform: translateY(-5px);
+        }
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #4a90e2, #2196f3);
+        }
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 15px;
+            resize: vertical;
+            transition: all 0.3s;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e0e0e0;
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+            line-height: 1.5;
+        }
+        textarea:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3), inset 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        button:hover {
+            transform: translateY(-3px);
+        }
+        .calculate-btn {
+            background: linear-gradient(135deg, #4a90e2, #3a80d2);
+            color: white;
+        }
+        .calculate-btn:hover {
+            background: linear-gradient(135deg, #3a80d2, #2a70c2);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.5);
+        }
+        .copy-btn {
+            background: linear-gradient(135deg, #4caf50, #3d9c40);
+            color: white;
+        }
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #3d9c40, #2e8b32);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.5);
+        }
+        .reset-btn {
+            background: linear-gradient(135deg, #f44336, #e23326);
+            color: white;
+        }
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #e23326, #d12316);
+            box-shadow: 0 10px 20px rgba(244, 67, 54, 0.5);
+        }
+        .credit-copy-section {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+            transition: transform 0.3s;
+            z-index: 2;
+        }
+        .credit-copy-section:hover {
+            transform: translateY(-5px);
+        }
+        .credit-copy-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #4caf50, #3d9c40);
+        }
+        .credit-copy-section h3 {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .credit-value {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #4caf50;
+            text-shadow: 0 3px 20px rgba(76, 175, 80, 0.5);
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        .icon {
+            font-size: 1.1rem;
+        }
+        .notification {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #4caf50, #3d9c40);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+            z-index: 1000;
+            transform: translateX(100px);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #e23326);
+        }
+        
+        /* Styling untuk section event info */
+        .event-info-section {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            transition: transform 0.3s;
+            z-index: 2;
+        }
+        .event-info-section:hover {
+            transform: translateY(-5px);
+        }
+        .event-info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff9800, #ff5722);
+        }
+        .event-info-section h3 {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            background: rgba(40, 51, 69, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .info-item:hover {
+            transform: translateY(-3px);
+        }
+        .info-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #ff9800;
+            justify-content: flex-start;
+        }
+        .info-item-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-item span {
+            font-size: 1.05rem;
+            color: #fff;
+            word-break: break-all;
+            flex: 1;
+            font-weight: 500;
+        }
+        .info-item button {
+            flex-shrink: 0;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        .links-section {
+            margin-top: 20px;
+        }
+        .links-section h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .link-item {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .link-item label {
+            margin-bottom: 8px;
+            color: #4a90e2;
+            justify-content: flex-start;
+        }
+        .link-container {
+            display: flex;
+            gap: 10px;
+        }
+        .link-container input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .copy-link-btn {
+            background: linear-gradient(135deg, #4a90e2, #3a80d2);
+            color: white;
+            padding: 10px 15px;
+        }
+        .copy-all-links-btn {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            margin-top: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+        .copy-all-links-btn:hover {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            box-shadow: 0 10px 20px rgba(255, 152, 0, 0.5);
+        }
+        
+        /* Styling untuk tab event */
+        .event-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: rgba(40, 51, 69, 0.9);
+            border-radius: 10px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+        .event-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .event-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .event-tab.active::before {
+            opacity: 1;
+        }
+        .event-tab:not(.active) {
+            background: transparent;
+            color: #b0b0b0;
+        }
+        .event-tab:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        /* Styling untuk preview gambar */
+        .image-preview-section {
+            margin-top: 25px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            z-index: 2;
+        }
+        .image-preview-section h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .image-grid {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+        }
+        .image-item {
+            background: rgba(40, 51, 69, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            min-width: 220px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .image-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(156, 39, 176, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+        .image-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .image-item:hover::before {
+            opacity: 1;
+        }
+        .image-item img {
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+        .image-label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #4a90e2;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Modal untuk gambar */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            overflow: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 5vh;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+            animation: zoomIn 0.3s ease-out;
+        }
+        .close {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            color: #fff;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1002;
+            transition: color 0.3s;
+        }
+        .close:hover {
+            color: #ff9800;
+        }
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 15px 0;
+            font-size: 1.2rem;
+        }
+        
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -15px) rotate(5deg); }
+            50% { transform: translate(-5px, 10px) rotate(-5deg); }
+            75% { transform: translate(15px, 5px) rotate(3deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 95%;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+            .credit-value {
+                font-size: 2.2rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .event-tabs, .main-tabs {
+                flex-direction: column;
+            }
+            .image-grid {
+                flex-direction: column;
+            }
+            .image-item {
+                min-width: auto;
+            }
+            .modal-content {
+                max-width: 95%;
+                max-height: 80%;
+            }
+            .close {
+                top: 15px;
+                right: 25px;
+                font-size: 35px;
+            }
+            .section-logo img {
+                max-width: 300px;
+            }
+            .id-value {
+                font-size: 1.4rem;
+            }
+            .toggle-container {
+                padding: 10px 15px;
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Efek Partikel */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+        }
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-coins"></i> Kalkulator & Event</h1>
+            <p class="subtitle">Satu aplikasi untuk semua kebutuhan perhitungan freespin dan event Mahjong Ways. Cepat, akurat, dan mudah digunakan.</p>
+        </div>
+        
+        <!-- Tab utama untuk memilih fitur -->
+        <div class="main-tabs">
+            <div class="main-tab active" data-content="freespin">Kalkulator Freespin</div>
+            <div class="main-tab" data-content="event">Event Mahjong Ways</div>
+        </div>
+        
+        <!-- Konten Kalkulator Freespin -->
+        <div id="freespinContent" class="content-section freespin-content active">
+            <!-- Logo Freespin -->
+            <div class="section-logo">
+                <img src="https://cdn.areabermain.club/assets/cdn/az6/2025/04/02/20250402/4065aaa7ab97bdae547e0010ee6bdfff/linetogel-gif-promo1.gif" alt="Logo Freespin">
+            </div>
+            
+            <div class="input-section">
+                <label for="transactionData">
+                    <i class="fas fa-paste"></i> Data Transaksi:
+                </label>
+                <textarea id="transactionData" placeholder="Tempel data transaksi di sini..."></textarea>
+                <div class="button-group">
+                    <button id="calculateBtn" class="calculate-btn">
+                        <i class="fas fa-calculator"></i> Hitung
+                    </button>
+                    <button id="resetBtn" class="reset-btn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Section khusus untuk menyalin total credit -->
+            <div class="credit-copy-section pulse">
+                <h3><i class="fas fa-copy"></i> Total Kemenangan Freespin</h3>
+                <div class="credit-value" id="displayCredit">IDR 0</div>
+                <button id="copyCreditBtn" class="copy-btn">
+                    <i class="fas fa-copy"></i> Salin Nominal
+                </button>
+            </div>
+        </div>
+
+        <!-- Konten Event Scatter Mahjong Ways -->
+        <div id="eventContent" class="content-section event-content">
+            <!-- Logo Event -->
+            <div class="section-logo">
+                <img src="https://cdn.areabermain.club/assets/cdn/az6/2025/04/02/20250402/fdde3f113c07ead01f7d121352d1dfdc/linetogel-gif-promo2.gif" alt="Logo Event Mahjong Ways">
+            </div>
+            
+            <div class="input-section">
+                <label for="eventData">
+                    <i class="fas fa-paste"></i> Data Event:
+                </label>
+                <textarea id="eventData" placeholder="Tempel data event di sini..."></textarea>
+                <div class="button-group">
+                    <button id="processEventBtn" class="calculate-btn">
+                        <i class="fas fa-cogs"></i> Proses Data
+                    </button>
+                    <button id="resetEventBtn" class="reset-btn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Toggle untuk Event Scatter - Dipindahkan ke bawah -->
+            <div class="toggle-container">
+                <div class="toggle-label">
+                    <i class="fas fa-toggle-on"></i> Tampilkan User ID Event Scatter:
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="eventScatterToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <!-- Section untuk menampilkan ID ketika toggle ON -->
+            <div id="idDisplaySection" class="id-display-section">
+                <h3><i class="fas fa-id-card"></i> User ID Event Scatter</h3>
+                <div class="id-value" id="displayUserId">-</div>
+                <button id="copyUserIdBtn" class="copy-btn">
+                    <i class="fas fa-copy"></i> Salin User ID
+                </button>
+            </div>
+            
+            <!-- Section untuk menampilkan informasi event -->
+            <div id="eventInfo" class="event-info-section">
+                <h3><i class="fas fa-ticket-alt"></i> Event Scatter Mahjong Ways</h3>
+                
+                <!-- Tab untuk memilih event -->
+                <div class="event-tabs">
+                    <div class="event-tab active" data-event="ways1">Mahjong Ways 1</div>
+                    <div class="event-tab" data-event="ways2">Mahjong Ways 2</div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label><i class="fas fa-user"></i> User ID:</label>
+                        <div class="info-item-content">
+                            <span id="eventUserId">-</span>
+                            <button class="copy-btn copy-user-id">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <label><i class="fas fa-ticket-alt"></i> Tiket:</label>
+                        <div class="info-item-content">
+                            <span id="eventTicket">-</span>
+                            <button class="copy-btn copy-ticket">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <label><i class="fas fa-money-bill-wave"></i> Nominal Bet:</label>
+                        <div class="info-item-content">
+                            <span id="eventBet">-</span>
+                            <button class="copy-btn copy-bet">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="links-section">
+                    <h4><i class="fas fa-link"></i> Link Bukti Screenshot:</h4>
+                    <div class="link-item">
+                        <label>Gabungan Link:</label>
+                        <div class="link-container">
+                            <input type="text" id="combinedLinks" readonly>
+                            <button class="copy-link-btn" data-link="combinedLinks"><i class="fas fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <button id="copyAllLinksBtn" class="copy-all-links-btn">
+                        <i class="fas fa-copy"></i> Salin Gabungan Link
+                    </button>
+                </div>
+                
+                <!-- Preview Gambar -->
+                <div id="imagePreview" class="image-preview-section">
+                    <h4><i class="fas fa-images"></i> Preview Gambar (Klik untuk memperbesar):</h4>
+                    <div class="image-grid">
+                        <div class="image-item" data-image="1">
+                            <img id="preview1" src="" alt="Preview 1">
+                            <span class="image-label">Gambar 1</span>
+                        </div>
+                        <div class="image-item" data-image="2">
+                            <img id="preview2" src="" alt="Preview 2">
+                            <span class="image-label">Gambar 2</span>
+                        </div>
+                        <div class="image-item" data-image="3">
+                            <img id="preview3" src="" alt="Preview 3">
+                            <span class="image-label">Gambar 3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 Kalkulator Freespin & Event Mahjong Ways - All rights reserved</p>
+        </div>
+    </div>
+
+    <!-- Modal untuk gambar -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Nominal berhasil disalin!</span>
+    </div>
+
+    <script>
+        // Variabel global untuk menyimpan nilai kredit
+        let currentTotalCredit = 0;
+        let currentEventType = 'ways1'; // Default event type
+        let currentUserId = ''; // Untuk menyimpan User ID
+        
+        // Inisialisasi partikel
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const size = Math.random() * 3 + 1;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${left}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Event listener untuk tab utama
+        document.querySelectorAll('.main-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Hapus class active dari semua tab
+                document.querySelectorAll('.main-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Tambah class active ke tab yang diklik
+                this.classList.add('active');
+                
+                // Sembunyikan semua konten
+                document.querySelectorAll('.content-section').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Tampilkan konten yang sesuai
+                const contentId = this.getAttribute('data-content') + 'Content';
+                document.getElementById(contentId).classList.add('active');
+            });
+        });
+
+        // Event listener untuk kalkulator freespin
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const transactionData = document.getElementById('transactionData').value;
+            if (!transactionData.trim()) {
+                showNotification('Silakan tempel data transaksi terlebih dahulu!', 'error');
+                return;
+            }
+            
+            const transactions = parseTransactionData(transactionData);
+            if (transactions.length === 0) {
+                showNotification('Tidak dapat menemukan data transaksi yang valid!', 'error');
+                return;
+            }
+            
+            calculateResults(transactions);
+            showNotification('Perhitungan selesai!');
+        });
+
+        document.getElementById('copyCreditBtn').addEventListener('click', function() {
+            if (currentTotalCredit === 0) {
+                showNotification('Tidak ada data credit untuk disalin!', 'error');
+                return;
+            }
+            
+            // Hanya mengambil angka tanpa "IDR" dan menggunakan koma sebagai pemisah ribuan
+            const creditValue = formatNumberWithCommas(currentTotalCredit);
+            
+            navigator.clipboard.writeText(creditValue)
+                .then(() => {
+                    showNotification(`Nominal ${creditValue} berhasil disalin!`);
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin teks: ', err);
+                    showNotification('Gagal menyalin nominal!', 'error');
+                });
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('transactionData').value = '';
+            resetResults();
+            showNotification('Data telah direset!');
+        });
+
+        // Event listener untuk event scatter
+        document.getElementById('processEventBtn').addEventListener('click', function() {
+            const eventData = document.getElementById('eventData').value;
+            if (!eventData.trim()) {
+                showNotification('Silakan tempel data event terlebih dahulu!', 'error');
+                return;
+            }
+            
+            processEventData(eventData);
+        });
+
+        document.getElementById('resetEventBtn').addEventListener('click', function() {
+            document.getElementById('eventData').value = '';
+            resetEventResults();
+            showNotification('Data event telah direset!');
+        });
+
+        // Event listener untuk toggle event scatter
+        document.getElementById('eventScatterToggle').addEventListener('change', function() {
+            const isChecked = this.checked;
+            const idDisplaySection = document.getElementById('idDisplaySection');
+            
+            if (isChecked) {
+                idDisplaySection.classList.add('active');
+                showNotification('Event Scatter diaktifkan!');
+                
+                // Jika sudah ada User ID yang diproses, tampilkan dengan tanda kurung
+                if (currentUserId) {
+                    document.getElementById('displayUserId').textContent = `(${currentUserId})`;
+                }
+            } else {
+                idDisplaySection.classList.remove('active');
+                showNotification('Event Scatter dinonaktifkan!');
+            }
+        });
+
+        // Event listener untuk tombol salin User ID khusus event scatter
+        document.getElementById('copyUserIdBtn').addEventListener('click', function() {
+            const userId = document.getElementById('displayUserId').textContent;
+            
+            if (userId === '-') {
+                showNotification('Tidak ada User ID untuk disalin!', 'error');
+                return;
+            }
+            
+            // Hapus tanda kurung sebelum menyalin
+            const userIdWithoutBrackets = userId.replace(/[()]/g, '');
+            
+            navigator.clipboard.writeText(userIdWithoutBrackets)
+                .then(() => {
+                    showNotification('User ID berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin User ID: ', err);
+                    showNotification('Gagal menyalin User ID!', 'error');
+                });
+        });
+
+        // Event listener untuk tab event
+        document.querySelectorAll('.event-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Hapus class active dari semua tab
+                document.querySelectorAll('.event-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Tambah class active ke tab yang diklik
+                this.classList.add('active');
+                
+                // Update event type
+                currentEventType = this.getAttribute('data-event');
+                
+                // Update tampilan jika ada data yang sudah diproses
+                const eventData = document.getElementById('eventData').value;
+                if (eventData) {
+                    processEventData(eventData);
+                }
+            });
+        });
+
+        // Event listener untuk tombol salin User ID
+        document.querySelector('.copy-user-id').addEventListener('click', function() {
+            const userId = document.getElementById('eventUserId').textContent;
+            
+            if (userId === '-') {
+                showNotification('Tidak ada User ID untuk disalin!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(userId)
+                .then(() => {
+                    showNotification('User ID berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin User ID: ', err);
+                    showNotification('Gagal menyalin User ID!', 'error');
+                });
+        });
+
+        // Event listener untuk tombol salin Tiket
+        document.querySelector('.copy-ticket').addEventListener('click', function() {
+            const ticket = document.getElementById('eventTicket').textContent;
+            
+            if (ticket === '-') {
+                showNotification('Tidak ada tiket untuk disalin!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(ticket)
+                .then(() => {
+                    showNotification('Tiket berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin tiket: ', err);
+                    showNotification('Gagal menyalin tiket!', 'error');
+                });
+        });
+
+        // Event listener untuk tombol salin nominal bet
+        document.querySelector('.copy-bet').addEventListener('click', function() {
+            const betValue = document.getElementById('eventBet').textContent;
+            
+            if (betValue === '-') {
+                showNotification('Tidak ada nominal bet untuk disalin!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(betValue)
+                .then(() => {
+                    showNotification('Nominal bet berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin nominal bet: ', err);
+                    showNotification('Gagal menyalin nominal bet!', 'error');
+                });
+        });
+
+        // Event listener untuk tombol salin link gabungan
+        document.querySelector('.copy-link-btn').addEventListener('click', function() {
+            const linkValue = document.getElementById('combinedLinks').value;
+            
+            if (!linkValue) {
+                showNotification('Tidak ada link untuk disalin!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(linkValue)
+                .then(() => {
+                    showNotification('Link gabungan berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin link: ', err);
+                    showNotification('Gagal menyalin link!', 'error');
+                });
+        });
+
+        // Event listener untuk tombol salin semua link
+        document.getElementById('copyAllLinksBtn').addEventListener('click', function() {
+            const combinedLinks = document.getElementById('combinedLinks').value;
+            
+            if (!combinedLinks) {
+                showNotification('Tidak ada link untuk disalin!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(combinedLinks)
+                .then(() => {
+                    showNotification('Semua link berhasil disalin!');
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin link: ', err);
+                    showNotification('Gagal menyalin link!', 'error');
+                });
+        });
+
+        // Event listener untuk gambar preview
+        document.querySelectorAll('.image-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const imageNum = this.getAttribute('data-image');
+                const imgSrc = document.getElementById(`preview${imageNum}`).src;
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                const caption = document.getElementById('modalCaption');
+                
+                modal.style.display = 'block';
+                modalImg.src = imgSrc;
+                caption.textContent = `Gambar ${imageNum}`;
+            });
+        });
+
+        // Event listener untuk menutup modal
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('imageModal').style.display = 'none';
+        });
+
+        // Event listener untuk menutup modal dengan klik di luar gambar
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Fungsi untuk memformat angka dengan koma sebagai pemisah ribuan
+        function formatNumberWithCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Fungsi untuk memproses data event
+        function processEventData(data) {
+            // Split data dengan tab
+            const parts = data.split('\t');
+            
+            if (parts.length >= 7) {
+                // Ekstrak informasi dari data
+                const userId = parts[0] || '-'; // User ID dari bagian pertama
+                
+                // Simpan User ID untuk event scatter
+                currentUserId = userId;
+                
+                // Cari nomor terpanjang untuk tiket
+                let longestNumber = '';
+                for (let i = 0; i < parts.length; i++) {
+                    // Hanya periksa bagian yang berisi angka saja
+                    if (/^\d+$/.test(parts[i].trim())) {
+                        if (parts[i].trim().length > longestNumber.length) {
+                            longestNumber = parts[i].trim();
+                        }
+                    }
+                }
+                
+                const ticket = longestNumber || '-';
+                
+                // Ekstrak nominal bet terkecil
+                let minBet = '-';
+                for (let i = 0; i < parts.length; i++) {
+                    if (parts[i].includes('BET')) {
+                        // Cari angka dalam format BET X,XXX - X,XXX
+                        const betMatches = parts[i].match(/(\d+,?\d*)/g);
+                        if (betMatches && betMatches.length > 0) {
+                            // Konversi ke angka dan cari yang terkecil
+                            const betNumbers = betMatches.map(num => parseFloat(num.replace(/,/g, '')));
+                            minBet = Math.min(...betNumbers);
+                            break;
+                        }
+                    }
+                }
+                
+                // Ekstrak link gambar (biasanya di bagian 1, 2, 3)
+                const links = parts.slice(1, 4).filter(link => link.includes('http'));
+                
+                // Gabungkan link dengan koma
+                const combinedLinks = links.join(', ');
+                
+                // Tampilkan informasi event
+                document.getElementById('eventUserId').textContent = userId;
+                document.getElementById('eventTicket').textContent = ticket;
+                document.getElementById('eventBet').textContent = minBet !== '-' ? `IDR ${minBet}` : '-';
+                document.getElementById('combinedLinks').value = combinedLinks;
+                
+                // Tampilkan preview gambar
+                document.getElementById('preview1').src = links[0] || '';
+                document.getElementById('preview2').src = links[1] || '';
+                document.getElementById('preview3').src = links[2] || '';
+                
+                // Update tampilan User ID untuk event scatter jika toggle aktif
+                const isToggleActive = document.getElementById('eventScatterToggle').checked;
+                if (isToggleActive) {
+                    // Tampilkan User ID dengan tanda kurung
+                    document.getElementById('displayUserId').textContent = `(${userId})`;
+                }
+                
+                // Update judul berdasarkan event type
+                const eventTitle = document.querySelector('#eventInfo h3');
+                if (currentEventType === 'ways1') {
+                    eventTitle.innerHTML = '<i class="fas fa-ticket-alt"></i> Event Scatter Mahjong Ways 1';
+                } else {
+                    eventTitle.innerHTML = '<i class="fas fa-ticket-alt"></i> Event Scatter Mahjong Ways 2';
+                }
+                
+                // Tampilkan section event info dan preview gambar
+                document.getElementById('eventInfo').style.display = 'block';
+                document.getElementById('imagePreview').style.display = 'block';
+                
+                showNotification('Data event berhasil diproses!');
+            } else {
+                showNotification('Format data event tidak valid! Pastikan data memiliki format yang benar.', 'error');
+            }
+        }
+
+        function parseTransactionData(data) {
+            const lines = data.split('\n');
+            const transactions = [];
+            let currentTransaction = {};
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                if (line.includes('Ext. ID :')) {
+                    currentTransaction.extId = line.replace('Ext. ID :', '').trim();
+                } else if (line.includes('Debit') || line.includes('Credit')) {
+                    currentTransaction.type = line.includes('Debit') ? 'Debit' : 'Credit';
+                } else if (line.startsWith('IDR') && !line.includes('Balance')) {
+                    currentTransaction.amount = parseAmount(line);
+                } else if (line.startsWith('Balance :')) {
+                    currentTransaction.balance = parseAmount(line.replace('Balance :', ''));
+                    
+                    // Jika kita memiliki semua data yang diperlukan, simpan transaksi
+                    if (currentTransaction.type && currentTransaction.amount !== undefined) {
+                        transactions.push({...currentTransaction});
+                        currentTransaction = {};
+                    }
+                }
+            }
+            
+            return transactions;
+        }
+
+        function parseAmount(amountString) {
+            // Menghapus "IDR" dan koma, lalu mengubah menjadi number
+            const cleaned = amountString.replace('IDR', '').replace(/,/g, '').trim();
+            return parseFloat(cleaned) || 0;
+        }
+
+        function calculateResults(transactions) {
+            let totalDebit = 0;
+            let totalCredit = 0;
+            
+            // Hitung total debit dan credit
+            transactions.forEach(transaction => {
+                if (transaction.type === 'Debit') {
+                    totalDebit += transaction.amount;
+                } else if (transaction.type === 'Credit') {
+                    totalCredit += transaction.amount;
+                }
+            });
+            
+            // Simpan nilai kredit ke variabel global
+            currentTotalCredit = totalCredit;
+            
+            // Tampilkan hasil
+            document.getElementById('displayCredit').textContent = formatCurrency(totalCredit);
+        }
+
+        function formatCurrency(amount) {
+            // Tetap menggunakan titik untuk tampilan di halaman
+            return 'IDR ' + amount.toLocaleString('id-ID');
+        }
+
+        function resetResults() {
+            // Reset variabel global
+            currentTotalCredit = 0;
+            
+            // Reset tampilan
+            document.getElementById('displayCredit').textContent = 'IDR 0';
+        }
+
+        function resetEventResults() {
+            // Reset variabel global
+            currentUserId = '';
+            
+            // Reset tampilan event
+            document.getElementById('eventUserId').textContent = '-';
+            document.getElementById('eventTicket').textContent = '-';
+            document.getElementById('eventBet').textContent = '-';
+            document.getElementById('combinedLinks').value = '';
+            document.getElementById('displayUserId').textContent = '-';
+            
+            // Reset preview gambar
+            document.getElementById('preview1').src = '';
+            document.getElementById('preview2').src = '';
+            document.getElementById('preview3').src = '';
+            
+            // Nonaktifkan toggle
+            document.getElementById('eventScatterToggle').checked = false;
+            document.getElementById('idDisplaySection').classList.remove('active');
+            
+            // Sembunyikan section event info dan preview gambar
+            document.getElementById('eventInfo').style.display = 'none';
+            document.getElementById('imagePreview').style.display = 'none';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><span>${message}</span>`;
+            
+            // Ubah kelas berdasarkan tipe notifikasi
+            if (type === 'error') {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Inisialisasi partikel saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+        });
+    </script>
+</body>
+</html>

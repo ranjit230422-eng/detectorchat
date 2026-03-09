@@ -1,0 +1,3970 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analisis Bukti Transfer & Penggabung Gambar</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #6c5ce7;
+  --primary-dark: #5649c9;
+  --secondary: #a29bfe;
+  --accent: #fd79a8;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+  --light: #f8f9fa;
+  --dark: #2d3436;
+  --gray: #dfe6e9;
+  --dark-bg: #0a0e27;
+  --card-bg: rgba(20, 24, 44, 0.8);
+  --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-bg: linear-gradient(135deg, #0a0e27 0%, #1a1d29 50%, #2d1b69 100%);
+  --neon-purple: #a855f7;
+  --neon-blue: #3b82f6;
+  --neon-pink: #ec4899;
+  --neon-green: #10b981;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--gradient-bg);
+  color: var(--light);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background with multiple layers */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 60% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 25%);
+  z-index: -2;
+  animation: floatingParticles 25s ease-in-out infinite;
+}
+
+/* Animated gradient overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    rgba(10, 14, 39, 0.7) 0%, 
+    rgba(26, 29, 41, 0.5) 25%, 
+    rgba(45, 27, 105, 0.7) 50%, 
+    rgba(26, 29, 41, 0.5) 75%, 
+    rgba(10, 14, 39, 0.7) 100%);
+  z-index: -1;
+  animation: gradientShift 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes floatingParticles {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(20px, -20px) rotate(1deg); }
+  66% { transform: translate(-20px, 20px) rotate(-1deg); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated geometric shapes */
+.geometric-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.1;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  top: 10%;
+  left: 10%;
+  filter: blur(40px);
+  animation: float1 20s infinite ease-in-out;
+}
+
+.shape-2 {
+  width: 200px;
+  height: 200px;
+  background: var(--gradient-2);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  bottom: 10%;
+  right: 10%;
+  filter: blur(30px);
+  animation: float2 15s infinite ease-in-out;
+}
+
+.shape-3 {
+  width: 250px;
+  height: 250px;
+  background: var(--gradient-3);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(35px);
+  animation: float3 25s infinite ease-in-out;
+}
+
+.shape-4 {
+  width: 150px;
+  height: 150px;
+  background: var(--gradient-4);
+  border-radius: 50%;
+  top: 20%;
+  right: 20%;
+  filter: blur(25px);
+  animation: float4 18s infinite ease-in-out;
+}
+
+.shape-5 {
+  width: 180px;
+  height: 180px;
+  background: var(--gradient-5);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  bottom: 20%;
+  left: 20%;
+  filter: blur(30px);
+  animation: float5 22s infinite ease-in-out;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(30px, -30px) rotate(180deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-20px, 30px) rotate(120deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  50% { transform: translate(-30%, -70%) rotate(90deg); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.2); }
+}
+
+@keyframes float5 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(30px, 20px) rotate(60deg); }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(20, 24, 44, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.3), 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 30px rgba(168, 85, 247, 0.2),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neon border animation */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--neon-purple), 
+    var(--neon-blue), 
+    var(--neon-pink), 
+    transparent);
+  animation: neonBorder 3s linear infinite;
+}
+
+@keyframes neonBorder {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px 0;
+  background: var(--gradient-1);
+  border-radius: 15px;
+  color: white;
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated header background */
+header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  transform: rotate(30deg);
+  animation: headerShine 8s ease-in-out infinite;
+}
+
+/* Floating orbs in header */
+header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 20%);
+  animation: floatingOrbs 15s ease-in-out infinite;
+}
+
+@keyframes headerShine {
+  0%, 100% { transform: rotate(30deg) translateX(-100%); }
+  50% { transform: rotate(30deg) translateX(100%); }
+}
+
+@keyframes floatingOrbs {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -10px); }
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.description {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 30px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 5px 15px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(168, 85, 247, 0.1);
+  position: relative;
+}
+
+/* Animated tab background */
+.tabs::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(168, 85, 247, 0.1), 
+    transparent);
+  animation: tabShine 5s linear infinite;
+}
+
+@keyframes tabShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.tab-button {
+  flex: 1;
+  padding: 18px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: var(--light);
+  z-index: 1;
+}
+
+.tab-button i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.tab-button.active {
+  background: var(--gradient-1);
+  color: white;
+  box-shadow: 
+    0 5px 15px rgba(108, 92, 231, 0.3),
+    0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.tab-button:not(.active):hover {
+  background: rgba(108, 92, 231, 0.2);
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-section, .gallery-section, .upload-section, .result-section {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(168, 85, 247, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated section borders */
+.input-section::before, .gallery-section::before, .upload-section::before, .result-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--neon-purple), 
+    var(--neon-blue), 
+    transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.input-section:hover::before, .gallery-section:hover::before, .upload-section:hover::before, .result-section:hover::before {
+  transform: scaleX(1);
+}
+
+/* Glow effect on hover */
+.input-section:hover, .gallery-section:hover, .upload-section:hover, .result-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-title i {
+  margin-right: 10px;
+  color: var(--primary);
+  font-size: 1.3em;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--light);
+}
+
+.url-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--light);
+}
+
+.url-input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(108, 92, 231, 0.2),
+    0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.btn {
+  padding: 15px 25px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated button background */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Neon glow on buttons */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn i {
+  margin-right: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 7px 15px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.btn-add {
+  background: var(--gradient-4);
+}
+
+.btn-add:hover {
+  background: linear-gradient(135deg, #38f9d7 0%, #43e97b 100%);
+}
+
+.btn-combine {
+  background: var(--gradient-1);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-combine:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-download {
+  background: var(--gradient-2);
+}
+
+.btn-download:hover {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+}
+
+.btn-new {
+  background: var(--gradient-5);
+  color: var(--dark);
+}
+
+.btn-new:hover {
+  background: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+}
+
+.btn-extract {
+  background: var(--gradient-1);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-extract:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-copy-image {
+  background: var(--gradient-1);
+  margin-top: 15px;
+}
+
+.btn-copy-image:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-screenshot {
+  background: var(--gradient-4);
+  margin-top: 15px;
+}
+
+.btn-screenshot:hover {
+  background: linear-gradient(135deg, #38f9d7 0%, #43e97b 100%);
+}
+
+.error {
+  color: var(--danger);
+  margin-top: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.error i {
+  margin-right: 5px;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.gallery-title {
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+
+.image-count {
+  background: var(--gradient-1);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.image-container {
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.3s;
+  height: 150px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(168, 85, 247, 0.3);
+  border-color: var(--primary);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-number {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.image-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.image-container:hover .image-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.action-btn:hover {
+  color: var(--secondary);
+}
+
+.result-section {
+  margin-top: 40px;
+  text-align: center;
+  display: none;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(168, 85, 247, 0.1);
+}
+
+.result-title {
+  font-size: 1.8rem;
+  color: var(--secondary);
+  margin-bottom: 15px;
+}
+
+.click-hint {
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.click-hint i {
+  margin-right: 5px;
+}
+
+#combinedImage {
+  max-width: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#combinedImage:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 12px 25px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.3);
+  border-color: var(--primary);
+}
+
+.result-actions {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.upload-area {
+  border: 3px dashed var(--primary);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated upload area background */
+.upload-area::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.upload-area:hover::before {
+  opacity: 1;
+}
+
+.upload-area:hover {
+  background: rgba(108, 92, 231, 0.1);
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.upload-area i {
+  font-size: 60px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.upload-text {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: var(--light);
+}
+
+.upload-btn {
+  padding: 12px 25px;
+  background: var(--gradient-1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 7px 15px rgba(108, 92, 231, 0.3),
+    0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.upload-btn i {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+#imageInput {
+  display: none;
+}
+
+.bank-selection {
+  margin-top: 20px;
+}
+
+.bank-selection label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--light);
+}
+
+.bank-select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--light);
+}
+
+.bank-select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(108, 92, 231, 0.2),
+    0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.preview-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.preview-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--light);
+}
+
+#imagePreview {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: none;
+}
+
+.result-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-item {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.result-label {
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.result-label i {
+  margin-right: 8px;
+  color: var(--primary);
+}
+
+.result-value {
+  font-size: 18px;
+  color: var(--light);
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+}
+
+.copy-btn {
+  background: var(--gradient-1);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 5px 10px rgba(108, 92, 231, 0.3),
+    0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.copy-btn i {
+  margin-right: 5px;
+}
+
+.edit-btn {
+  background: var(--gradient-5);
+  color: var(--dark);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.notification {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 15px 25px;
+  background: var(--gradient-4);
+  color: white;
+  border-radius: 10px;
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(16, 185, 129, 0.3);
+  display: none;
+  z-index: 1001;
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s forwards;
+  max-width: 350px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(20px); }
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instructions {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 25px;
+  border-left: 4px solid var(--primary);
+}
+
+.instructions h3 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  color: var(--secondary);
+}
+
+.instructions ol {
+  margin-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-state i {
+  font-size: 60px;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.empty-state p {
+  font-size: 16px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  margin-top: 15px;
+  overflow: hidden;
+  display: none;
+}
+
+.progress {
+  height: 100%;
+  background: var(--gradient-1);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.ocr-status {
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+  color: var(--primary);
+  display: none;
+}
+
+.bank-patterns {
+  margin-top: 15px;
+  font-size: 14px;
+  color: var(--secondary);
+  background: rgba(108, 92, 231, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  display: none;
+}
+
+.bank-patterns ul {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.bank-patterns li {
+  margin-bottom: 3px;
+}
+
+.payment-type {
+  margin-top: 15px;
+}
+
+.payment-type label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--light);
+}
+
+.payment-select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--light);
+}
+
+.payment-select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(108, 92, 231, 0.2),
+    0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+/* Tambahan untuk hasil ekstraksi yang lebih baik */
+.result-value.highlight {
+  animation: highlight 2s;
+}
+
+@keyframes highlight {
+  0% { background-color: rgba(0, 184, 148, 0.1); }
+  100% { background-color: rgba(255, 255, 255, 0.05); }
+}
+
+.manual-input {
+  margin-top: 15px;
+  display: none;
+}
+
+.manual-input input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--light);
+}
+
+/* Responsiveness improvements */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .main-content {
+    gap: 20px;
+  }
+  
+  .input-section, .gallery-section, .upload-section, .result-section {
+    padding: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .result-actions {
+    flex-direction: column;
+  }
+}
+
+/* Loading spinner untuk tombol */
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Tambahan untuk animasi klik gambar */
+.image-clicked {
+  animation: imageClick 0.5s ease;
+}
+
+@keyframes imageClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Modal untuk gambar yang diperbesar */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  overflow: auto;
+  animation: fadeIn 0.3s;
+}
+
+.modal-content {
+  position: relative;
+  margin: 50px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 1200px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(168, 85, 247, 0.2);
+  animation: slideIn 0.4s;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+}
+
+.modal-title i {
+  margin-right: 10px;
+}
+
+.close-modal {
+  color: var(--light);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+}
+
+.close-modal:hover {
+  color: var(--danger);
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.screenshot-info {
+  margin-top: 15px;
+  font-size: 14px;
+  color: var(--secondary);
+  background: rgba(108, 92, 231, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screenshot-info i {
+  margin-right: 8px;
+}
+
+.debug-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--warning);
+}
+
+.debug-title {
+  font-size: 16px;
+  color: var(--warning);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.debug-title i {
+  margin-right: 8px;
+}
+
+.debug-text {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--light);
+  white-space: pre-wrap;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+/* Tambahan untuk tampilan hasil yang lebih baik */
+.result-item.correct {
+  border-left: 3px solid var(--success);
+}
+
+.result-item.incorrect {
+  border-left: 3px solid var(--danger);
+}
+
+.result-item.partial {
+  border-left: 3px solid var(--warning);
+}
+
+.confidence-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.confidence-bar {
+  flex-grow: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.confidence-high {
+  background: var(--success);
+  width: 80%;
+}
+
+.confidence-medium {
+  background: var(--warning);
+  width: 50%;
+}
+
+.confidence-low {
+  background: var(--danger);
+  width: 30%;
+}
+
+/* Tambahan untuk mode edit lanjutan */
+.advanced-edit {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  display: none;
+}
+
+.advanced-edit-title {
+  font-size: 14px;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.advanced-edit-title i {
+  margin-right: 5px;
+}
+
+.suggestions-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.suggestion-chip {
+  padding: 5px 10px;
+  background: rgba(108, 92, 231, 0.2);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggestion-chip:hover {
+  background: rgba(108, 92, 231, 0.4);
+}
+
+/* Tambahan untuk tampilan loading yang lebih baik */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.loading-content {
+  text-align: center;
+  padding: 30px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 15px;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: var(--light);
+}
+
+/* Floating action buttons */
+.fab-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+}
+
+.fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--gradient-1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(168, 85, 247, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.fab:hover {
+  transform: scale(1.1);
+  box-shadow: 
+    0 6px 15px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.fab-menu {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.fab-container.active .fab-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.fab-item {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(168, 85, 247, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.fab-item:hover {
+  transform: scale(1.1);
+}
+
+.fab-item.transfer {
+  background: var(--gradient-1);
+}
+
+.fab-item.merge {
+  background: var(--gradient-2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Animated stars background */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Neon text effect */
+.neon-text {
+  text-shadow: 
+    0 0 5px rgba(168, 85, 247, 0.7),
+    0 0 10px rgba(168, 85, 247, 0.5),
+    0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+/* Glowing card effect */
+.glow-card {
+  box-shadow: 
+    0 0 20px rgba(168, 85, 247, 0.2),
+    0 0 40px rgba(168, 85, 247, 0.1);
+}
+
+/* Pulse animation */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Glow on focus */
+.glow-focus:focus {
+  box-shadow: 
+    0 0 0 3px rgba(108, 92, 231, 0.2),
+    0 0 15px rgba(168, 85, 247, 0.3);
+}
+</style>
+</head>
+<body>
+<!-- Animated geometric shapes background -->
+<div class="geometric-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+  <div class="shape shape-5"></div>
+</div>
+
+<!-- Animated stars background -->
+<div class="stars" id="stars"></div>
+
+<div class="container">
+<header>
+<h1 class="neon-text"><i class="fas fa-analytics"></i> Analisis Bukti Transfer & Penggabung Gambar</h1>
+<p class="description">Ekstrak informasi dari bukti transfer dan gabungkan gambar dengan mudah</p>
+</header>
+
+<div class="tabs">
+<button class="tab-button active" data-tab="transferAnalysis">
+<i class="fas fa-money-bill-wave"></i> Analisis Transfer
+</button>
+<button class="tab-button" data-tab="imageMerger">
+<i class="fas fa-layer-group"></i> Penggabung Gambar
+</button>
+</div>
+
+<!-- Tab 1: Analisis Transfer -->
+<div class="tab-content active" id="transferAnalysis">
+<div class="main-content">
+<div class="upload-section">
+<h2 class="section-title"><i class="fas fa-upload"></i> Unggah Bukti Transfer</h2>
+
+<div class="upload-area" id="uploadArea">
+<i class="fas fa-cloud-upload-alt"></i>
+<p class="upload-text">Seret dan lepas gambar bukti transfer di sini atau klik untuk memilih</p>
+<button class="upload-btn" id="uploadButton">
+<i class="fas fa-file-image"></i> Pilih Gambar
+</button>
+<input type="file" id="imageInput" accept="image/*">
+</div>
+
+<div class="input-group">
+<label for="imageUrlTransfer">Atau masukkan URL gambar:</label>
+<input type="text" id="imageUrlTransfer" class="url-input glow-focus" placeholder="Contoh: https://example.com/transfer-proof.jpg">
+<p class="error" id="urlErrorTransfer"></p>
+</div>
+
+<div class="payment-type">
+<label for="paymentType"><i class="fas fa-wallet"></i> Jenis Pembayaran:</label>
+<select id="paymentType" class="payment-select glow-focus">
+<option value="bank">Transfer Bank</option>
+<option value="ewallet">E-Wallet/QRIS</option>
+</select>
+</div>
+
+<div class="bank-selection">
+<label for="bankSelect"><i class="fas fa-university"></i> Pilih Bank/Provider:</label>
+<select id="bankSelect" class="bank-select glow-focus">
+<option value="">-- Pilih Bank/Provider --</option>
+<option value="bca">BCA</option>
+<option value="bni">BNI</option>
+<option value="bri">BRI</option>
+<option value="mandiri">Mandiri</option>
+<option value="cimb">CIMB Niaga</option>
+<option value="danamon">Danamon</option>
+<option value="gopay">GoPay</option>
+<option value="ovo">OVO</option>
+<option value="dana">DANA</option>
+<option value="shopeepay">ShopeePay</option>
+<option value="linkaja">LinkAja</option>
+<option value="other">Lainnya</option>
+</select>
+</div>
+
+<div class="bank-patterns" id="bankPatterns">
+<strong>Pola yang dideteksi:</strong>
+<ul>
+<li id="patternInfo">-</li>
+</ul>
+</div>
+
+<div class="preview-container">
+<p class="preview-title">Pratinjau Gambar:</p>
+<img id="imagePreview" alt="Pratinjau gambar bukti transfer">
+</div>
+
+<button class="btn btn-extract pulse" id="extractBtn">
+<i class="fas fa-cogs"></i> Ekstrak Informasi
+</button>
+
+<div class="progress-bar" id="progressBar">
+<div class="progress" id="progress"></div>
+</div>
+<div class="ocr-status" id="ocrStatus">Memproses gambar...</div>
+</div>
+
+<div class="result-section" id="transferResultContainer">
+<h2 class="section-title"><i class="fas fa-file-invoice"></i> Hasil Ekstraksi</h2>
+
+<div class="result-box glow-card">
+<div class="result-item" id="merchantItem">
+<div class="result-label"><i class="fas fa-store"></i> Nama Merchant</div>
+<div class="result-value" id="merchantResult">-</div>
+<div class="confidence-indicator">
+<span>Tingkat kepercayaan: </span>
+<div class="confidence-bar">
+<div class="confidence-fill" id="merchantConfidence"></div>
+</div>
+</div>
+<button class="copy-btn" data-copy="merchantResult">
+<i class="fas fa-copy"></i> Salin
+</button>
+<button class="edit-btn" data-edit="merchantResult">
+<i class="fas fa-edit"></i> Edit
+</button>
+<div class="manual-input" id="merchantInput">
+<input type="text" id="merchantEdit" placeholder="Masukkan nama merchant">
+<button class="btn btn-add save-btn" data-save="merchant">Simpan</button>
+</div>
+<div class="advanced-edit" id="merchantAdvanced">
+<div class="advanced-edit-title">
+<span><i class="fas fa-magic"></i> Saran Perbaikan</span>
+<button class="edit-btn" id="closeMerchantAdvanced"><i class="fas fa-times"></i></button>
+</div>
+<div class="suggestions-container" id="merchantSuggestions"></div>
+</div>
+</div>
+
+<div class="result-item" id="rrnItem">
+<div class="result-label" id="rrnLabel"><i class="fas fa-receipt"></i> RRN/QRIS</div>
+<div class="result-value" id="rrnResult">-</div>
+<div class="confidence-indicator">
+<span>Tingkat kepercayaan: </span>
+<div class="confidence-bar">
+<div class="confidence-fill" id="rrnConfidence"></div>
+</div>
+</div>
+<button class="copy-btn" data-copy="rrnResult">
+<i class="fas fa-copy"></i> Salin
+</button>
+<button class="edit-btn" data-edit="rrnResult">
+<i class="fas fa-edit"></i> Edit
+</button>
+<div class="manual-input" id="rrnInput">
+<input type="text" id="rrnEdit" placeholder="Masukkan RRN/QRIS">
+<button class="btn btn-add save-btn" data-save="rrn">Simpan</button>
+</div>
+<div class="advanced-edit" id="rrnAdvanced">
+<div class="advanced-edit-title">
+<span><i class="fas fa-magic"></i> Saran Perbaikan</span>
+<button class="edit-btn" id="closeRrnAdvanced"><i class="fas fa-times"></i></button>
+</div>
+<div class="suggestions-container" id="rrnSuggestions"></div>
+</div>
+</div>
+
+<div class="result-item" id="referenceItem">
+<div class="result-label"><i class="fas fa-hashtag"></i> Nomor Referensi</div>
+<div class="result-value" id="referenceResult">-</div>
+<div class="confidence-indicator">
+<span>Tingkat kepercayaan: </span>
+<div class="confidence-bar">
+<div class="confidence-fill" id="referenceConfidence"></div>
+</div>
+</div>
+<button class="copy-btn" data-copy="referenceResult">
+<i class="fas fa-copy"></i> Salin
+</button>
+<button class="edit-btn" data-edit="referenceResult">
+<i class="fas fa-edit"></i> Edit
+</button>
+<div class="manual-input" id="referenceInput">
+<input type="text" id="referenceEdit" placeholder="Masukkan nomor referensi">
+<button class="btn btn-add save-btn" data-save="reference">Simpan</button>
+</div>
+<div class="advanced-edit" id="referenceAdvanced">
+<div class="advanced-edit-title">
+<span><i class="fas fa-magic"></i> Saran Perbaikan</span>
+<button class="edit-btn" id="closeReferenceAdvanced"><i class="fas fa-times"></i></button>
+</div>
+<div class="suggestions-container" id="referenceSuggestions"></div>
+</div>
+</div>
+
+<div class="result-item" id="amountItem">
+<div class="result-label"><i class="fas fa-money-bill-wave"></i> Nominal Transfer</div>
+<div class="result-value" id="amountResult">-</div>
+<div class="confidence-indicator">
+<span>Tingkat kepercayaan: </span>
+<div class="confidence-bar">
+<div class="confidence-fill" id="amountConfidence"></div>
+</div>
+</div>
+<button class="copy-btn" data-copy="amountResult">
+<i class="fas fa-copy"></i> Salin
+</button>
+<button class="edit-btn" data-edit="amountResult">
+<i class="fas fa-edit"></i> Edit
+</button>
+<div class="manual-input" id="amountInput">
+<input type="text" id="amountEdit" placeholder="Masukkan nominal transfer">
+<button class="btn btn-add save-btn" data-save="amount">Simpan</button>
+</div>
+<div class="advanced-edit" id="amountAdvanced">
+<div class="advanced-edit-title">
+<span><i class="fas fa-magic"></i> Saran Perbaikan</span>
+<button class="edit-btn" id="closeAmountAdvanced"><i class="fas fa-times"></i></button>
+</div>
+<div class="suggestions-container" id="amountSuggestions"></div>
+</div>
+</div>
+
+<div class="result-item" id="dateItem">
+<div class="result-label"><i class="fas fa-calendar"></i> Tanggal & Waktu</div>
+<div class="result-value" id="dateResult">-</div>
+<div class="confidence-indicator">
+<span>Tingkat kepercayaan: </span>
+<div class="confidence-bar">
+<div class="confidence-fill" id="dateConfidence"></div>
+</div>
+</div>
+<button class="copy-btn" data-copy="dateResult">
+<i class="fas fa-copy"></i> Salin
+</button>
+<button class="edit-btn" data-edit="dateResult">
+<i class="fas fa-edit"></i> Edit
+</button>
+<div class="manual-input" id="dateInput">
+<input type="text" id="dateEdit" placeholder="Masukkan tanggal & waktu">
+<button class="btn btn-add save-btn" data-save="date">Simpan</button>
+</div>
+<div class="advanced-edit" id="dateAdvanced">
+<div class="advanced-edit-title">
+<span><i class="fas fa-magic"></i> Saran Perbaikan</span>
+<button class="edit-btn" id="closeDateAdvanced"><i class="fas fa-times"></i></button>
+</div>
+<div class="suggestions-container" id="dateSuggestions"></div>
+</div>
+</div>
+</div>
+
+<div class="debug-section" id="debugSection" style="display: none;">
+<div class="debug-title"><i class="fas fa-bug"></i> Debug OCR</div>
+<div class="debug-text" id="debugText"></div>
+</div>
+
+<div class="action-buttons">
+<button class="btn btn-download" id="downloadBtn">
+<i class="fas fa-download"></i> Unduh Hasil
+</button>
+<button class="btn btn-reset" id="resetBtn">
+<i class="fas fa-redo"></i> Reset
+</button>
+<button class="btn btn-new" id="debugBtn" style="background: var(--gradient-5); color: var(--dark);">
+<i class="fas fa-bug"></i> Debug OCR
+</button>
+<button class="btn btn-new" id="verifyBtn" style="background: var(--gradient-4); color: white;">
+<i class="fas fa-check-circle"></i> Verifikasi Manual
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Tab 2: Penggabung Gambar -->
+<div class="tab-content" id="imageMerger">
+<div class="main-content">
+<div class="input-section">
+<h2 class="section-title"><i class="fas fa-link"></i> Tambahkan Link Gambar</h2>
+<div class="input-group">
+<label for="imageUrl">Masukkan URL Gambar:</label>
+<input type="text" id="imageUrl" class="url-input glow-focus" placeholder="Contoh: https://example.com/image.jpg">
+<p class="error" id="urlError"></p>
+</div>
+<button id="addImageBtn" class="btn btn-add pulse"><i class="fas fa-plus-circle"></i> Tambahkan Gambar</button>
+
+<div class="instructions">
+<h3><i class="fas fa-lightbulb"></i> Cara Penggunaan</h3>
+<ol>
+<li>Masukkan URL gambar di atas</li>
+<li>Klik "Tambahkan Gambar" untuk menambahkannya ke galeri</li>
+<li>Klik pada gambar di galeri untuk melihat preview dan menyalin URL</li>
+<li>Klik "Gabungkan Gambar" setelah menambahkan semua gambar</li>
+<li>Klik pada gambar hasil untuk memperbesar dan melakukan screenshot</li>
+<li>Unduh hasil penggabungan gambar</li>
+</ol>
+</div>
+</div>
+
+<div class="gallery-section">
+<div class="gallery-header">
+<h2 class="section-title"><i class="fas fa-images"></i> Galeri Gambar</h2>
+<span class="image-count" id="imageCount">0</span>
+</div>
+
+<div class="gallery" id="imageGallery">
+<div class="empty-state">
+<i class="fas fa-inbox"></i>
+<p>Belum ada gambar. Tambahkan gambar menggunakan form di sebelah.</p>
+</div>
+</div>
+
+<button id="combineBtn" class="btn btn-combine pulse"><i class="fas fa-object-group"></i> Gabungkan Gambar</button>
+</div>
+</div>
+
+<div class="result-section" id="resultContainer">
+<h2 class="result-title"><i class="fas fa-check-circle"></i> Hasil Penggabungan Gambar</h2>
+<p class="click-hint"><i class="fas fa-mouse-pointer"></i> Klik pada gambar di bawah untuk memperbesar dan melakukan screenshot</p>
+<canvas id="combinedCanvas" style="display: none;"></canvas>
+<img id="combinedImage" alt="Hasil penggabungan gambar">
+<div class="result-actions">
+<button id="downloadImageBtn" class="btn btn-download"><i class="fas fa-download"></i> Download Gambar</button>
+<button id="copyImageBtn" class="btn btn-copy-image"><i class="fas fa-copy"></i> Salin Gambar</button>
+<button id="newMergeBtn" class="btn btn-new"><i class="fas fa-plus"></i> Merge Baru</button>
+</div>
+</div>
+</div>
+
+<footer>
+<p>© 2023 Analisis Transfer & Penggabung Gambar - Ekstrak informasi dengan teknologi OCR canggih</p>
+</footer>
+</div>
+
+<!-- Modal untuk gambar yang diperbesar -->
+<div id="imageModal" class="image-modal">
+  <div class="modal-content glow-card">
+    <div class="modal-header">
+      <h2 class="modal-title neon-text"><i class="fas fa-expand"></i> Tampilan Gambar Besar</h2>
+      <button class="close-modal" id="closeModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <img id="modalImage" class="modal-image" src="" alt="Gambar yang diperbesar">
+      <div class="modal-actions">
+        <button id="modalDownloadBtn" class="btn btn-download"><i class="fas fa-download"></i> Download Gambar</button>
+        <button id="modalCopyBtn" class="btn btn-copy-image"><i class="fas fa-copy"></i> Salin Gambar</button>
+        <button id="screenshotBtn" class="btn btn-screenshot"><i class="fas fa-camera"></i> Screenshot</button>
+      </div>
+      <div class="screenshot-info">
+        <i class="fas fa-info-circle"></i> 
+        <span>Gunakan tombol Screenshot untuk menangkap gambar. Hasil akan otomatis diunduh.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-content glow-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">Memproses gambar...</div>
+  </div>
+</div>
+
+<!-- Notifikasi -->
+<div class="notification" id="notification">
+<i class="fas fa-check-circle"></i> <span id="notificationText">Berhasil disalin!</span>
+</div>
+
+<!-- Floating Action Buttons -->
+<div class="fab-container" id="fabContainer">
+  <div class="fab-menu">
+    <button class="fab-item transfer" id="fabTransfer" title="Analisis Transfer">
+      <i class="fas fa-money-bill-wave"></i>
+    </button>
+    <button class="fab-item merge" id="fabMerge" title="Penggabung Gambar">
+      <i class="fas fa-layer-group"></i>
+    </button>
+  </div>
+  <button class="fab pulse" id="fabMain">
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Create animated stars
+  const starsContainer = document.getElementById('stars');
+  const starsCount = 100;
+  
+  for (let i = 0; i < starsCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    // Random position
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    
+    // Random size
+    const size = Math.random() * 3;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    
+    // Random animation delay
+    star.style.animationDelay = `${Math.random() * 3}s`;
+    
+    starsContainer.appendChild(star);
+  }
+
+  // Tab functionality
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tabId = button.getAttribute('data-tab');
+
+      // Deactivate all tabs
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      // Activate current tab
+      button.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+
+  // Floating Action Button functionality
+  const fabContainer = document.getElementById('fabContainer');
+  const fabMain = document.getElementById('fabMain');
+  const fabTransfer = document.getElementById('fabTransfer');
+  const fabMerge = document.getElementById('fabMerge');
+
+  fabMain.addEventListener('click', function() {
+    fabContainer.classList.toggle('active');
+    
+    // Rotate the plus icon
+    if (fabContainer.classList.contains('active')) {
+      fabMain.innerHTML = '<i class="fas fa-times"></i>';
+    } else {
+      fabMain.innerHTML = '<i class="fas fa-plus"></i>';
+    }
+  });
+
+  fabTransfer.addEventListener('click', function() {
+    // Switch to transfer analysis tab
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    document.querySelector('[data-tab="transferAnalysis"]').classList.add('active');
+    document.getElementById('transferAnalysis').classList.add('active');
+    
+    // Close FAB menu
+    fabContainer.classList.remove('active');
+    fabMain.innerHTML = '<i class="fas fa-plus"></i>';
+  });
+
+  fabMerge.addEventListener('click', function() {
+    // Switch to image merger tab
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    document.querySelector('[data-tab="imageMerger"]').classList.add('active');
+    document.getElementById('imageMerger').classList.add('active');
+    
+    // Close FAB menu
+    fabContainer.classList.remove('active');
+    fabMain.innerHTML = '<i class="fas fa-plus"></i>';
+  });
+
+  // Payment type and bank selection logic
+  const paymentType = document.getElementById('paymentType');
+  const bankSelect = document.getElementById('bankSelect');
+  const bankPatterns = document.getElementById('bankPatterns');
+  const patternInfo = document.getElementById('patternInfo');
+  const rrnLabel = document.getElementById('rrnLabel');
+
+  paymentType.addEventListener('change', updateBankOptions);
+  bankSelect.addEventListener('change', updatePatternInfo);
+
+  function updateBankOptions() {
+    const type = paymentType.value;
+    bankSelect.innerHTML = '';
+
+    if (type === 'bank') {
+      const bankOptions = [
+        {value: '', text: '-- Pilih Bank --'},
+        {value: 'bca', text: 'BCA'},
+        {value: 'bni', text: 'BNI'},
+        {value: 'bri', text: 'BRI'},
+        {value: 'mandiri', text: 'Mandiri'},
+        {value: 'cimb', text: 'CIMB Niaga'},
+        {value: 'danamon', text: 'Danamon'},
+        {value: 'other', text: 'Bank Lainnya'}
+      ];
+
+      bankOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        bankSelect.appendChild(opt);
+      });
+
+      rrnLabel.innerHTML = '<i class="fas fa-receipt"></i> RRN/Referensi';
+    } else {
+      const ewalletOptions = [
+        {value: '', text: '-- Pilih E-Wallet --'},
+        {value: 'gopay', text: 'GoPay'},
+        {value: 'ovo', text: 'OVO'},
+        {value: 'dana', text: 'DANA'},
+        {value: 'shopeepay', text: 'ShopeePay'},
+        {value: 'linkaja', text: 'LinkAja'},
+        {value: 'other', text: 'E-Wallet Lainnya'}
+      ];
+
+      ewalletOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        bankSelect.appendChild(opt);
+      });
+
+      rrnLabel.innerHTML = '<i class="fas fa-receipt"></i> Kode QRIS/Transaksi';
+    }
+
+    updatePatternInfo();
+  }
+
+  function updatePatternInfo() {
+    const type = paymentType.value;
+    const bank = bankSelect.value;
+
+    if (!bank) {
+      bankPatterns.style.display = 'none';
+      return;
+    }
+
+    bankPatterns.style.display = 'block';
+
+    if (type === 'bank') {
+      switch(bank) {
+        case 'bca':
+          patternInfo.textContent = 'RRN: 12 digit, Referensi: 16 digit';
+          break;
+        case 'bni':
+          patternInfo.textContent = 'RRN: 12 digit, Referensi: 16 digit';
+          break;
+        case 'bri':
+          patternInfo.textContent = 'RRN: 12 digit, Referensi: 16 digit';
+          break;
+        case 'mandiri':
+          patternInfo.textContent = 'RRN: 12 digit, Referensi: 16 digit';
+          break;
+        default:
+          patternInfo.textContent = 'RRN: 12-16 digit, Referensi: 10-16 digit';
+      }
+    } else {
+      patternInfo.textContent = 'Kode QRIS/Transaksi: 16-20 karakter alfanumerik';
+    }
+  }
+
+  // Initialize bank options
+  updateBankOptions();
+
+  // Image Merger functionality
+  const imageUrlInput = document.getElementById('imageUrl');
+  const addImageBtn = document.getElementById('addImageBtn');
+  const urlError = document.getElementById('urlError');
+  const imageGallery = document.getElementById('imageGallery');
+  const imageCount = document.getElementById('imageCount');
+  const combineBtn = document.getElementById('combineBtn');
+  const resultContainer = document.getElementById('resultContainer');
+  const combinedCanvas = document.getElementById('combinedCanvas');
+  const combinedImage = document.getElementById('combinedImage');
+  const downloadImageBtn = document.getElementById('downloadImageBtn');
+  const copyImageBtn = document.getElementById('copyImageBtn');
+  const newMergeBtn = document.getElementById('newMergeBtn');
+
+  // Modal elements
+  const imageModal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const closeModal = document.getElementById('closeModal');
+  const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+  const modalCopyBtn = document.getElementById('modalCopyBtn');
+  const screenshotBtn = document.getElementById('screenshotBtn');
+
+  let images = [];
+
+  // Fungsi untuk menambahkan gambar
+  addImageBtn.addEventListener('click', function() {
+    const url = imageUrlInput.value.trim();
+
+    if (!url) {
+      showError('Masukkan link gambar terlebih dahulu', 'urlError');
+      return;
+    }
+
+    // Validasi URL gambar
+    if (!isValidImageUrl(url)) {
+      showError('Link tidak valid atau bukan gambar', 'urlError');
+      return;
+    }
+
+    // Cek apakah gambar sudah ada
+    if (images.includes(url)) {
+      showError('Gambar ini sudah ditambahkan', 'urlError');
+      return;
+    }
+
+    // Tambahkan gambar
+    images.push(url);
+    renderGallery();
+    imageUrlInput.value = '';
+    urlError.textContent = '';
+  });
+
+  // Fungsi untuk menampilkan error
+  function showError(message, errorElementId) {
+    const errorElement = document.getElementById(errorElementId);
+    errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+  }
+
+  // Fungsi untuk memvalidasi URL gambar
+  function isValidImageUrl(url) {
+    return /\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i.test(url);
+  }
+
+  // Fungsi untuk merender galeri
+  function renderGallery() {
+    imageCount.textContent = images.length;
+
+    if (images.length === 0) {
+      imageGallery.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>Belum ada gambar. Tambahkan gambar menggunakan form di sebelah.</p>
+        </div>
+      `;
+      return;
+    }
+
+    imageGallery.innerHTML = '';
+
+    images.forEach((url, index) => {
+      const imageContainer = document.createElement('div');
+      imageContainer.className = 'image-container';
+      imageContainer.setAttribute('data-url', url);
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = `Gambar ${index + 1}`;
+      img.onerror = function() {
+        imageContainer.innerHTML = `
+          <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #e74c3c;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 30px; margin-bottom: 10px;"></i>
+            <span>Gagal memuat gambar</span>
+          </div>
+        `;
+      };
+
+      const imageNumber = document.createElement('div');
+      imageNumber.className = 'image-number';
+      imageNumber.textContent = index + 1;
+
+      const imageActions = document.createElement('div');
+      imageActions.className = 'image-actions';
+      imageActions.innerHTML = `
+        <button class="action-btn" data-index="${index}" data-action="view"><i class="fas fa-eye"></i></button>
+        <button class="action-btn" data-index="${index}" data-action="copy"><i class="fas fa-copy"></i></button>
+        <button class="action-btn" data-index="${index}" data-action="remove"><i class="fas fa-trash"></i></button>
+      `;
+
+      imageContainer.appendChild(img);
+      imageContainer.appendChild(imageNumber);
+      imageContainer.appendChild(imageActions);
+      imageGallery.appendChild(imageContainer);
+
+      // Event listener untuk action buttons
+      const actionButtons = imageContainer.querySelectorAll('.action-btn');
+      actionButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const index = parseInt(this.getAttribute('data-index'));
+          const action = this.getAttribute('data-action');
+
+          if (action === 'view') {
+            openModal(images[index]);
+          } else if (action === 'copy') {
+            copyToClipboard(images[index]);
+          } else if (action === 'remove') {
+            images.splice(index, 1);
+            renderGallery();
+          }
+        });
+      });
+
+      // Event listener untuk membuka modal saat gambar di klik
+      imageContainer.addEventListener('click', function() {
+        openModal(url);
+      });
+    });
+  }
+
+  // Fungsi untuk membuka modal preview gambar
+  function openModal(url) {
+    // Dalam implementasi nyata, ini akan membuka modal dengan gambar yang lebih besar
+    // Untuk sederhananya, kita salin URL ke clipboard
+    copyToClipboard(url);
+  }
+
+  // Fungsi untuk menyalin teks ke clipboard
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      showNotification('URL berhasil disalin!');
+    }).catch(err => {
+      showNotification('Gagal menyalin URL');
+      console.error('Error copying text: ', err);
+    });
+  }
+
+  // Fungsi untuk menampilkan notifikasi
+  function showNotification(message) {
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+
+    notificationText.textContent = message;
+    notification.style.display = 'block';
+
+    // Sembunyikan notifikasi setelah 3 detik
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 3000);
+  }
+
+  // Fungsi untuk menggabungkan gambar
+  combineBtn.addEventListener('click', function() {
+    if (images.length < 1) {
+      showNotification('Tambahkan setidaknya satu gambar');
+      return;
+    }
+
+    // Sembunyikan tombol sementara proses
+    combineBtn.disabled = true;
+    combineBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menggabungkan...';
+
+    // Gunakan Promise untuk menunggu semua gambar dimuat
+    const loadImage = url => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous'; // Untuk menangani CORS
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = url;
+      });
+    };
+
+    Promise.all(images.map(loadImage))
+    .then(loadedImages => {
+      // Batasi dimensi maksimal untuk setiap gambar
+      const maxWidth = 1920;
+      const maxHeight = 1080;
+      const processedImages = [];
+      
+      loadedImages.forEach(img => {
+        let width = img.width;
+        let height = img.height;
+        
+        // Hitung rasio aspek
+        const aspectRatio = width / height;
+        
+        // Sesuaikan ukuran jika terlalu besar
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            width = maxWidth;
+            height = maxWidth / aspectRatio;
+          } else {
+            height = maxHeight;
+            width = maxHeight * aspectRatio;
+          }
+        }
+        
+        // Buat canvas untuk mengubah ukuran gambar
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Konversi ke data URL dengan kualitas 80%
+        const resizedImage = canvas.toDataURL('image/jpeg', 0.8);
+        
+        // Buat objek Image baru dari gambar yang diubah ukurannya
+        const resizedImg = new Image();
+        resizedImg.src = resizedImage;
+        processedImages.push(resizedImg);
+      });
+      
+      // Tunggu semua gambar yang diubah ukurannya dimuat
+      Promise.all(processedImages.map(img => {
+        return new Promise(resolve => {
+          if (img.complete) {
+            resolve(img);
+          } else {
+            img.onload = () => resolve(img);
+          }
+        });
+      }))
+      .then(finalImages => {
+        // Hitung dimensi canvas
+        const totalWidth = finalImages.reduce((sum, img) => sum + img.width, 0);
+        const maxHeight = Math.max(...finalImages.map(img => img.height));
+
+        // Set ukuran canvas
+        combinedCanvas.width = totalWidth;
+        combinedCanvas.height = maxHeight;
+
+        const ctx = combinedCanvas.getContext('2d');
+
+        // Gambar semua gambar pada canvas
+        let xOffset = 0;
+        finalImages.forEach(img => {
+          ctx.drawImage(img, xOffset, 0);
+          xOffset += img.width;
+        });
+
+        // Konversi canvas ke data URL dengan kualitas 80%
+        combinedImage.src = combinedCanvas.toDataURL('image/jpeg', 0.8);
+        resultContainer.style.display = 'block';
+
+        // Scroll ke hasil
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+      });
+    })
+    .catch(error => {
+      console.error('Error loading images:', error);
+      showNotification('Gagal memuat beberapa gambar. Pastikan link gambar valid.');
+    })
+    .finally(() => {
+      // Kembalikan tombol ke keadaan semula
+      combineBtn.disabled = false;
+      combineBtn.innerHTML = '<i class="fas fa-object-group"></i> Gabungkan Gambar';
+    });
+  });
+
+  // Fungsi untuk mengunduh gambar
+  downloadImageBtn.addEventListener('click', function() {
+    const link = document.createElement('a');
+    link.download = 'gabungan-gambar.png';
+    link.href = combinedCanvas.toDataURL('image/png');
+    link.click();
+  });
+
+  // Fungsi untuk menyalin gambar ke clipboard
+  copyImageBtn.addEventListener('click', function() {
+    copyImageToClipboard();
+  });
+
+  // Fungsi untuk menyalin gambar ke clipboard
+  function copyImageToClipboard() {
+    combinedCanvas.toBlob(function(blob) {
+      const item = new ClipboardItem({ 'image/png': blob });
+      navigator.clipboard.write([item]).then(function() {
+        showNotification('Gambar berhasil disalin ke clipboard!');
+      }).catch(function(error) {
+        console.error('Error copying image: ', error);
+        showNotification('Gagal menyalin gambar. Browser Anda mungkin tidak mendukung fitur ini.');
+      });
+    });
+  }
+
+  // Event listener untuk klik pada gambar hasil
+  combinedImage.addEventListener('click', function() {
+    // Tambahkan animasi klik
+    this.classList.add('image-clicked');
+    setTimeout(() => {
+      this.classList.remove('image-clicked');
+    }, 500);
+    
+    // Buka modal dengan gambar yang diperbesar
+    openImageModal(this.src);
+  });
+
+  // Fungsi untuk membuka modal gambar yang diperbesar
+  function openImageModal(imageSrc) {
+    modalImage.src = imageSrc;
+    imageModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Mencegah scrolling di background
+  }
+
+  // Event listener untuk menutup modal
+  closeModal.addEventListener('click', function() {
+    imageModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Kembalikan scrolling
+  });
+
+  // Event listener untuk menutup modal saat klik di luar gambar
+  window.addEventListener('click', function(event) {
+    if (event.target === imageModal) {
+      imageModal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Kembalikan scrolling
+    }
+  });
+
+  // Event listener untuk tombol download di modal
+  modalDownloadBtn.addEventListener('click', function() {
+    const link = document.createElement('a');
+    link.download = 'gabungan-gambar.png';
+    link.href = modalImage.src;
+    link.click();
+  });
+
+  // Event listener untuk tombol salin di modal
+  modalCopyBtn.addEventListener('click', function() {
+    // Buat canvas dari gambar modal
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      
+      canvas.toBlob(function(blob) {
+        const item = new ClipboardItem({ 'image/png': blob });
+        navigator.clipboard.write([item]).then(function() {
+          showNotification('Gambar berhasil disalin ke clipboard!');
+        }).catch(function(error) {
+          console.error('Error copying image: ', error);
+          showNotification('Gagal menyalin gambar. Browser Anda mungkin tidak mendukung fitur ini.');
+        });
+      });
+    };
+    img.src = modalImage.src;
+  });
+
+  // Event listener untuk tombol screenshot
+  screenshotBtn.addEventListener('click', function() {
+    // Tambahkan loading state
+    screenshotBtn.disabled = true;
+    screenshotBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat Screenshot...';
+    
+    // Gunakan html2canvas untuk mengambil screenshot dari modal
+    html2canvas(document.querySelector('.modal-content'), {
+      useCORS: true,
+      allowTaint: true,
+      scale: 2 // Meningkatkan kualitas screenshot
+    }).then(canvas => {
+      // Konversi canvas ke blob dan unduh
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `screenshot-${new Date().getTime()}.png`;
+        link.href = url;
+        link.click();
+        
+        // Bersihkan URL setelah unduhan
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 100);
+        
+        showNotification('Screenshot berhasil diunduh!');
+        
+        // Kembalikan tombol ke keadaan semula
+        screenshotBtn.disabled = false;
+        screenshotBtn.innerHTML = '<i class="fas fa-camera"></i> Screenshot';
+      }, 'image/png');
+    }).catch(error => {
+      console.error('Error taking screenshot:', error);
+      showNotification('Gagal mengambil screenshot. Silakan coba lagi.');
+      
+      // Kembalikan tombol ke keadaan semula
+      screenshotBtn.disabled = false;
+      screenshotBtn.innerHTML = '<i class="fas fa-camera"></i> Screenshot';
+    });
+  });
+
+  // Fungsi untuk memulai merge baru
+  newMergeBtn.addEventListener('click', function() {
+    images = [];
+    renderGallery();
+    resultContainer.style.display = 'none';
+    showNotification('Mulai merge gambar baru');
+  });
+
+  // Transfer Analysis functionality
+  const uploadArea = document.getElementById('uploadArea');
+  const uploadButton = document.getElementById('uploadButton');
+  const imageInput = document.getElementById('imageInput');
+  const imageUrlTransfer = document.getElementById('imageUrlTransfer');
+  const urlErrorTransfer = document.getElementById('urlErrorTransfer');
+  const imagePreview = document.getElementById('imagePreview');
+  const extractBtn = document.getElementById('extractBtn');
+  const merchantResult = document.getElementById('merchantResult');
+  const rrnResult = document.getElementById('rrnResult');
+  const referenceResult = document.getElementById('referenceResult');
+  const amountResult = document.getElementById('amountResult');
+  const dateResult = document.getElementById('dateResult');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const transferResultContainer = document.getElementById('transferResultContainer');
+  const progressBar = document.getElementById('progressBar');
+  const progress = document.getElementById('progress');
+  const ocrStatus = document.getElementById('ocrStatus');
+  const debugSection = document.getElementById('debugSection');
+  const debugText = document.getElementById('debugText');
+  const debugBtn = document.getElementById('debugBtn');
+  const verifyBtn = document.getElementById('verifyBtn');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingText = document.getElementById('loadingText');
+
+  // Confidence indicators
+  const merchantConfidence = document.getElementById('merchantConfidence');
+  const rrnConfidence = document.getElementById('rrnConfidence');
+  const referenceConfidence = document.getElementById('referenceConfidence');
+  const amountConfidence = document.getElementById('amountConfidence');
+  const dateConfidence = document.getElementById('dateConfidence');
+
+  // Result items
+  const merchantItem = document.getElementById('merchantItem');
+  const rrnItem = document.getElementById('rrnItem');
+  const referenceItem = document.getElementById('referenceItem');
+  const amountItem = document.getElementById('amountItem');
+  const dateItem = document.getElementById('dateItem');
+
+  // Advanced edit sections
+  const merchantAdvanced = document.getElementById('merchantAdvanced');
+  const rrnAdvanced = document.getElementById('rrnAdvanced');
+  const referenceAdvanced = document.getElementById('referenceAdvanced');
+  const amountAdvanced = document.getElementById('amountAdvanced');
+  const dateAdvanced = document.getElementById('dateAdvanced');
+
+  // Suggestions containers
+  const merchantSuggestions = document.getElementById('merchantSuggestions');
+  const rrnSuggestions = document.getElementById('rrnSuggestions');
+  const referenceSuggestions = document.getElementById('referenceSuggestions');
+  const amountSuggestions = document.getElementById('amountSuggestions');
+  const dateSuggestions = document.getElementById('dateSuggestions');
+
+  let uploadedImage = null;
+  let extractedText = ''; // Simpan teks yang diekstrak untuk debugging
+  let extractedData = {}; // Simpan data yang diekstrak dengan confidence score
+
+  // Event listener untuk upload area
+  uploadArea.addEventListener('click', function() {
+    imageInput.click();
+  });
+
+  uploadButton.addEventListener('click', function(e) {
+    e.stopPropagation();
+    imageInput.click();
+  });
+
+  uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    uploadArea.style.background = 'rgba(108, 92, 231, 0.2)';
+    uploadArea.style.borderColor = '#4a3cb5';
+  });
+
+  uploadArea.addEventListener('dragleave', function() {
+    uploadArea.style.background = 'rgba(255, 255, 255, 0.05)';
+    uploadArea.style.borderColor = '#6c5ce7';
+  });
+
+  uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadArea.style.background = 'rgba(255, 255, 255, 0.05)';
+    uploadArea.style.borderColor = '#6c5ce7';
+
+    if (e.dataTransfer.files.length) {
+      handleImageUpload(e.dataTransfer.files[0]);
+    }
+  });
+
+  imageInput.addEventListener('change', function() {
+    if (imageInput.files.length) {
+      handleImageUpload(imageInput.files[0]);
+    }
+  });
+
+  imageUrlTransfer.addEventListener('blur', function() {
+    const url = imageUrlTransfer.value.trim();
+    if (url && isValidImageUrl(url)) {
+      // Buat objek Image untuk memeriksa dimensi
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = function() {
+        // Batasi dimensi maksimal
+        const maxWidth = 1920;
+        const maxHeight = 1080;
+        
+        let width = img.width;
+        let height = img.height;
+        
+        // Hitung rasio aspek
+        const aspectRatio = width / height;
+        
+        // Sesuaikan ukuran jika terlalu besar
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            width = maxWidth;
+            height = maxWidth / aspectRatio;
+          } else {
+            height = maxHeight;
+            width = maxHeight * aspectRatio;
+          }
+        }
+        
+        // Buat canvas untuk mengubah ukuran gambar
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Konversi ke data URL dengan kualitas 80%
+        const resizedImage = canvas.toDataURL('image/jpeg', 0.8);
+        
+        imagePreview.src = resizedImage;
+        imagePreview.style.display = 'block';
+        uploadedImage = resizedImage;
+        urlErrorTransfer.textContent = '';
+      };
+      
+      img.onerror = function() {
+        urlErrorTransfer.textContent = 'Gagal memuat gambar. Pastikan URL valid dan dapat diakses.';
+      };
+      
+      img.src = url;
+    } else if (url) {
+      urlErrorTransfer.textContent = 'URL gambar tidak valid';
+    }
+  });
+
+  // Fungsi untuk menangani upload gambar
+  function handleImageUpload(file) {
+    if (!file.type.match('image.*')) {
+      showNotification('Harap unggah file gambar');
+      return;
+    }
+
+    // Periksa ukuran file (maksimal 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      showNotification('Ukuran gambar terlalu besar. Maksimal 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      // Buat objek Image untuk memeriksa dimensi
+      const img = new Image();
+      img.onload = function() {
+        // Batasi dimensi maksimal
+        const maxWidth = 1920;
+        const maxHeight = 1080;
+        
+        let width = img.width;
+        let height = img.height;
+        
+        // Hitung rasio aspek
+        const aspectRatio = width / height;
+        
+        // Sesuaikan ukuran jika terlalu besar
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            width = maxWidth;
+            height = maxWidth / aspectRatio;
+          } else {
+            height = maxHeight;
+            width = maxHeight * aspectRatio;
+          }
+        }
+        
+        // Buat canvas untuk mengubah ukuran gambar
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Konversi ke data URL dengan kualitas 80%
+        const resizedImage = canvas.toDataURL('image/jpeg', 0.8);
+        
+        imagePreview.src = resizedImage;
+        imagePreview.style.display = 'block';
+        uploadedImage = resizedImage;
+      };
+      
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // Event listener untuk tombol ekstrak
+  extractBtn.addEventListener('click', function() {
+    if (!uploadedImage) {
+      showNotification('Harap unggah gambar terlebih dahulu');
+      return;
+    }
+
+    if (!bankSelect.value) {
+      showNotification('Harap pilih bank/provider terlebih dahulu');
+      return;
+    }
+
+    // Tampilkan loading overlay
+    loadingOverlay.style.display = 'flex';
+    loadingText.textContent = 'Menganalisis gambar...';
+
+    // Ekstrak teks dari gambar menggunakan Tesseract.js
+    extractTextFromImage(uploadedImage);
+  });
+
+  // Event listener untuk tombol debug
+  debugBtn.addEventListener('click', function() {
+    if (debugSection.style.display === 'none') {
+      debugSection.style.display = 'block';
+      debugText.textContent = extractedText || 'Tidak ada teks yang diekstrak. Silakan ekstrak gambar terlebih dahulu.';
+    } else {
+      debugSection.style.display = 'none';
+    }
+  });
+
+  // Event listener untuk tombol verifikasi manual
+  verifyBtn.addEventListener('click', function() {
+    if (!extractedData || Object.keys(extractedData).length === 0) {
+      showNotification('Tidak ada data untuk diverifikasi. Silakan ekstrak gambar terlebih dahulu.');
+      return;
+    }
+
+    // Tampilkan semua bagian edit lanjutan
+    merchantAdvanced.style.display = 'block';
+    rrnAdvanced.style.display = 'block';
+    referenceAdvanced.style.display = 'block';
+    amountAdvanced.style.display = 'block';
+    dateAdvanced.style.display = 'block';
+
+    // Generate suggestions for each field
+    generateSuggestions('merchant', extractedData.merchant);
+    generateSuggestions('rrn', extractedData.rrn);
+    generateSuggestions('reference', extractedData.reference);
+    generateSuggestions('amount', extractedData.amount);
+    generateSuggestions('date', extractedData.date);
+
+    showNotification('Mode verifikasi manual diaktifkan. Periksa dan perbaiki data yang diperlukan.');
+  });
+
+  // Fungsi untuk mengekstrak teks dari gambar menggunakan Tesseract.js
+  function extractTextFromImage(imageData) {
+    Tesseract.recognize(
+      imageData,
+      'eng+ind', // Bahasa: Inggris + Indonesia
+      {
+        logger: progress => {
+          if (progress.status === 'recognizing text') {
+            const p = progress.progress * 100;
+            progress.style.width = `${p}%`;
+            
+            // Update loading text
+            if (p < 30) {
+              loadingText.textContent = 'Mengenali teks...';
+            } else if (p < 60) {
+              loadingText.textContent = 'Memproses hasil...';
+            } else if (p < 90) {
+              loadingText.textContent = 'Menganalisis struktur...';
+            } else {
+              loadingText.textContent = 'Menyelesaikan...';
+            }
+          }
+        }
+      }
+    ).then(({ data: { text, confidence } }) => {
+      // Simpan teks yang diekstrak untuk debugging
+      extractedText = text;
+      
+      // Sembunyikan loading overlay
+      loadingOverlay.style.display = 'none';
+
+      // Proses teks yang diekstrak
+      processExtractedText(text, confidence);
+    }).catch(error => {
+      console.error('Error OCR:', error);
+      showNotification('Gagal memproses gambar. Coba lagi dengan gambar yang lebih jelas.');
+      loadingOverlay.style.display = 'none';
+    });
+  }
+
+  // Fungsi untuk memproses teks yang diekstrak dari gambar
+  function processExtractedText(text, confidence) {
+    console.log("Teks yang diekstrak:", text);
+    console.log("Confidence OCR:", confidence);
+
+    // Bersihkan teks dan pecah menjadi baris
+    const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+
+    // Ekstrak informasi berdasarkan bank yang dipilih
+    const bank = bankSelect.value;
+    const paymentMethod = paymentType.value;
+    
+    // Ekstrak data dengan confidence score
+    extractedData = {
+      merchant: extractMerchantWithConfidence(lines, bank, paymentMethod),
+      rrn: extractRRNWithConfidence(lines, bank, paymentMethod),
+      reference: extractReferenceWithConfidence(lines, bank, paymentMethod),
+      amount: extractAmountWithConfidence(lines, bank, paymentMethod),
+      date: extractDateWithConfidence(lines, bank, paymentMethod)
+    };
+
+    // Tampilkan hasil
+    displayExtractedData(extractedData);
+
+    // Tampilkan container hasil
+    transferResultContainer.style.display = 'block';
+
+    showNotification('Informasi berhasil diekstrak. Periksa keakuratan data.');
+  }
+
+  // Fungsi untuk menampilkan data yang diekstrak
+  function displayExtractedData(data) {
+    // Tampilkan nama merchant
+    merchantResult.textContent = data.merchant.value;
+    updateConfidenceIndicator('merchant', data.merchant.confidence);
+    updateResultItemStatus('merchant', data.merchant.confidence);
+
+    // Tampilkan RRN/QRIS
+    rrnResult.textContent = data.rrn.value;
+    updateConfidenceIndicator('rrn', data.rrn.confidence);
+    updateResultItemStatus('rrn', data.rrn.confidence);
+
+    // Tampilkan nomor referensi
+    referenceResult.textContent = data.reference.value;
+    updateConfidenceIndicator('reference', data.reference.confidence);
+    updateResultItemStatus('reference', data.reference.confidence);
+
+    // Tampilkan nominal transfer
+    amountResult.textContent = data.amount.value;
+    updateConfidenceIndicator('amount', data.amount.confidence);
+    updateResultItemStatus('amount', data.amount.confidence);
+
+    // Tampilkan tanggal & waktu
+    dateResult.textContent = data.date.value;
+    updateConfidenceIndicator('date', data.date.confidence);
+    updateResultItemStatus('date', data.date.confidence);
+  }
+
+  // Fungsi untuk memperbarui indikator confidence
+  function updateConfidenceIndicator(field, confidence) {
+    const indicator = document.getElementById(`${field}Confidence`);
+    
+    // Hapus semua kelas confidence
+    indicator.classList.remove('confidence-high', 'confidence-medium', 'confidence-low');
+    
+    // Tambahkan kelas yang sesuai berdasarkan nilai confidence
+    if (confidence >= 80) {
+      indicator.classList.add('confidence-high');
+    } else if (confidence >= 50) {
+      indicator.classList.add('confidence-medium');
+    } else {
+      indicator.classList.add('confidence-low');
+    }
+  }
+
+  // Fungsi untuk memperbarui status item hasil
+  function updateResultItemStatus(field, confidence) {
+    const item = document.getElementById(`${field}Item`);
+    
+    // Hapus semua kelas status
+    item.classList.remove('correct', 'incorrect', 'partial');
+    
+    // Tambahkan kelas yang sesuai berdasarkan nilai confidence
+    if (confidence >= 80) {
+      item.classList.add('correct');
+    } else if (confidence >= 50) {
+      item.classList.add('partial');
+    } else {
+      item.classList.add('incorrect');
+    }
+  }
+
+  // Fungsi untuk mengekstrak merchant dengan confidence score
+  function extractMerchantWithConfidence(lines, bank, paymentMethod) {
+    // Kata kunci yang sering muncul sebelum atau setelah nama merchant
+    const merchantKeywords = [
+      'MERCHANT', 'TOKO', 'STORE', 'NAMA', 'PEMILIK', 'PENJUAL', 
+      'MERCHANT NAME', 'NAMA MERCHANT', 'STORE NAME', 'NAMA TOKO',
+      'PEMBAYARAN KE', 'PAYMENT TO', 'DITERIMA OLEH', 'RECEIVED BY'
+    ];
+    
+    // Kata kunci yang sering muncul setelah nama merchant
+    const afterMerchantKeywords = [
+      'TERIMA KASIH', 'SALDO', 'PEMBAYARAN', 'TRANSAKSI', 'TRANSFER',
+      'NOMINAL', 'JUMLAH', 'RP', 'IDR', 'RRN', 'REF', 'REFERENSI',
+      'NO.', 'NO', 'TANGGAL', 'DATE', 'WAKTU', 'TIME', 'SUCCESS', 'BERHASIL'
+    ];
+    
+    let bestMatch = { value: "-", confidence: 0 };
+    
+    // Cari baris yang mengandung kata kunci merchant
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].toUpperCase();
+      
+      // Cari baris yang mengandung kata kunci merchant
+      for (const keyword of merchantKeywords) {
+        if (line.includes(keyword)) {
+          // Jika baris berikutnya ada dan tidak mengandung kata kunci setelah merchant
+          if (i + 1 < lines.length && 
+              !afterMerchantKeywords.some(k => lines[i + 1].toUpperCase().includes(k))) {
+            const candidate = lines[i + 1].trim();
+            const confidence = calculateMerchantConfidence(candidate, lines, i + 1);
+            
+            if (confidence > bestMatch.confidence) {
+              bestMatch = { value: candidate, confidence };
+            }
+          }
+          
+          // Jika baris ini mengandung kata kunci dan ada teks setelahnya
+          const parts = line.split(keyword);
+          if (parts.length > 1 && parts[1].trim()) {
+            const candidate = parts[1].trim();
+            const confidence = calculateMerchantConfidence(candidate, lines, i);
+            
+            if (confidence > bestMatch.confidence) {
+              bestMatch = { value: candidate, confidence };
+            }
+          }
+        }
+      }
+    }
+    
+    // Cari baris yang mungkin adalah nama merchant (berdasarkan pola)
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      // Lewati baris yang mengandung kata kunci bukan merchant
+      if (afterMerchantKeywords.some(k => line.toUpperCase().includes(k))) {
+        continue;
+      }
+      
+      // Cari baris dengan format yang khas untuk nama merchant
+      // Biasanya nama merchant adalah baris pendek dengan huruf kapital
+      if (line.length > 3 && line.length < 30 && 
+          /^[A-Z\s&.,'-]+$/.test(line) && 
+          !line.match(/^(BCA|BNI|BRI|MANDIRI|DANAMON|CIMB|GOJEK|GO-PAY|OVO|DANA|SHOPEE|LINKAJA|QRIS|ATM|BANK|MOBILE|TRANSFER|PAYMENT|SUCCESS|FAILED|PENDING|TRANSAKSI|REF|RRN|ID|NO|DATE|TIME|AMOUNT|TOTAL|SALDO|CREDIT|DEBIT)/i)) {
+        const confidence = calculateMerchantConfidence(line, lines, i);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: line.trim(), confidence };
+        }
+      }
+    }
+    
+    // Cari pola khusus untuk setiap bank
+    if (paymentMethod === 'bank') {
+      switch(bank) {
+        case 'bca':
+          // Cari pola "Ke: NAMAMERCHANT" atau "Ke NAMAMERCHANT"
+          for (const line of lines) {
+            const match = line.match(/^(?:KE|TO)[:\s]*([A-Z\s&.,'-]+)$/i);
+            if (match && match[1]) {
+              const candidate = match[1].trim();
+              const confidence = calculateMerchantConfidence(candidate, lines, lines.indexOf(line));
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bni':
+          // Cari pola "Ke: NAMAMERCHANT" atau "Ke NAMAMERCHANT"
+          for (const line of lines) {
+            const match = line.match(/^(?:KE|TO)[:\s]*([A-Z\s&.,'-]+)$/i);
+            if (match && match[1]) {
+              const candidate = match[1].trim();
+              const confidence = calculateMerchantConfidence(candidate, lines, lines.indexOf(line));
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bri':
+          // Cari pola "Ke: NAMAMERCHANT" atau "Ke NAMAMERCHANT"
+          for (const line of lines) {
+            const match = line.match(/^(?:KE|TO)[:\s]*([A-Z\s&.,'-]+)$/i);
+            if (match && match[1]) {
+              const candidate = match[1].trim();
+              const confidence = calculateMerchantConfidence(candidate, lines, lines.indexOf(line));
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'mandiri':
+          // Cari pola "Ke: NAMAMERCHANT" atau "Ke NAMAMERCHANT"
+          for (const line of lines) {
+            const match = line.match(/^(?:KE|TO)[:\s]*([A-Z\s&.,'-]+)$/i);
+            if (match && match[1]) {
+              const candidate = match[1].trim();
+              const confidence = calculateMerchantConfidence(candidate, lines, lines.indexOf(line));
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+          break;
+      }
+    } else {
+      // Untuk e-wallet, cari pola "Merchant: NAMAMERCHANT" atau "Merchant NAMAMERCHANT"
+      for (const line of lines) {
+        const match = line.match(/^MERCHANT[:\s]*([A-Z\s&.,'-]+)$/i);
+        if (match && match[1]) {
+          const candidate = match[1].trim();
+          const confidence = calculateMerchantConfidence(candidate, lines, lines.indexOf(line));
+          
+          if (confidence > bestMatch.confidence) {
+            bestMatch = { value: candidate, confidence };
+          }
+        }
+      }
+    }
+    
+    return bestMatch;
+  }
+
+  // Fungsi untuk menghitung confidence score untuk nama merchant
+  function calculateMerchantConfidence(candidate, lines, index) {
+    let confidence = 50; // Base confidence
+    
+    // Tingkatkan confidence jika kandidat memiliki format yang khas untuk nama merchant
+    if (/^[A-Z\s&.,'-]+$/.test(candidate) && candidate.length > 3 && candidate.length < 30) {
+      confidence += 20;
+    }
+    
+    // Tingkatkan confidence jika kandidat tidak mengandung kata kunci bukan merchant
+    const nonMerchantKeywords = [
+      'TERIMA KASIH', 'SALDO', 'PEMBAYARAN', 'TRANSAKSI', 'TRANSFER',
+      'NOMINAL', 'JUMLAH', 'RP', 'IDR', 'RRN', 'REF', 'REFERENSI',
+      'NO.', 'NO', 'TANGGAL', 'DATE', 'WAKTU', 'TIME', 'SUCCESS', 'BERHASIL'
+    ];
+    
+    if (!nonMerchantKeywords.some(k => candidate.toUpperCase().includes(k))) {
+      confidence += 15;
+    }
+    
+    // Tingkatkan confidence jika kandidat berada di posisi yang tepat dalam teks
+    if (index > 0 && index < lines.length - 1) {
+      const prevLine = lines[index - 1].toUpperCase();
+      const nextLine = lines[index + 1].toUpperCase();
+      
+      // Jika baris sebelumnya mengandung kata kunci merchant
+      if (prevLine.includes('MERCHANT') || prevLine.includes('TOKO') || 
+          prevLine.includes('STORE') || prevLine.includes('NAMA')) {
+        confidence += 25;
+      }
+      
+      // Jika baris berikutnya mengandung kata kunci pembayaran
+      if (nextLine.includes('RP') || nextLine.includes('IDR') || 
+          nextLine.includes('NOMINAL') || nextLine.includes('JUMLAH')) {
+        confidence += 15;
+      }
+    }
+    
+    return Math.min(confidence, 100); // Maksimal confidence adalah 100
+  }
+
+  // Fungsi untuk mengekstrak RRN dengan confidence score
+  function extractRRNWithConfidence(lines, bank, paymentMethod) {
+    let bestMatch = { value: "-", confidence: 0 };
+    
+    if (paymentMethod === 'bank') {
+      // Pola untuk RRN bank (12-16 digit)
+      const rrnPatterns = [
+        /(RRN|rrn|Retrieval Reference Number)[\s:]*([0-9]{12,16})/i,
+        /(?:NO|NO\.)?\s*RRN[\s:]*([0-9]{12,16})/i,
+        /([0-9]{12,16})/, // Cari angka 12-16 digit
+      ];
+
+      for (let line of lines) {
+        for (const pattern of rrnPatterns) {
+          const match = line.match(pattern);
+          if (match) {
+            // Jika pola memiliki grup kedua, ambil grup kedua
+            const candidate = match.length > 2 ? match[2] : match[1];
+            
+            // Pastikan bukan format tanggal (ddmmyyyy atau yyyymmdd)
+            if (!/^(\d{2})(\d{2})(\d{4})$/.test(candidate) && 
+                !/^(\d{4})(\d{2})(\d{2})$/.test(candidate)) {
+              const confidence = calculateRRNConfidence(candidate, line, pattern);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+        }
+      }
+      
+      // Cari pola khusus untuk setiap bank
+      switch(bank) {
+        case 'bca':
+          // Cari pola "NO. RRN: 123456789012"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*RRN|RRN)[\s:]*([0-9]{12,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bni':
+          // Cari pola "NO. RRN: 123456789012"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*RRN|RRN)[\s:]*([0-9]{12,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bri':
+          // Cari pola "NO. RRN: 123456789012"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*RRN|RRN)[\s:]*([0-9]{12,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'mandiri':
+          // Cari pola "NO. RRN: 123456789012"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*RRN|RRN)[\s:]*([0-9]{12,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+      }
+    } else {
+      // Pola untuk kode transaksi e-wallet/QRIS
+      const qrisPatterns = [
+        /(QRIS|qris|QR|Kode Transaksi|Transaction ID)[\s:]*([A-Z0-9]{16,20})/i,
+        /(?:NO|NO\.)?\s*QRIS[\s:]*([A-Z0-9]{16,20})/i,
+        /([A-Z0-9]{16,20})/, // Cari kode 16-20 karakter alfanumerik
+      ];
+
+      for (let line of lines) {
+        for (const pattern of qrisPatterns) {
+          const match = line.match(pattern);
+          if (match) {
+            // Jika pola memiliki grup kedua, ambil grup kedua
+            const candidate = match.length > 2 ? match[2] : match[1];
+            
+            // Pastikan bukan format tanggal atau angka murni
+            if (!/^\d+$/.test(candidate) && 
+                !/^(\d{2})(\d{2})(\d{4})$/.test(candidate) && 
+                !/^(\d{4})(\d{2})(\d{2})$/.test(candidate)) {
+              const confidence = calculateRRNConfidence(candidate, line, pattern);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+        }
+      }
+      
+      // Cari pola khusus untuk setiap e-wallet
+      switch(bank) {
+        case 'gopay':
+          // Cari pola "Payment ID: ABCDEFGHIJKLMNOPQR"
+          for (const line of lines) {
+            const match = line.match(/(?:PAYMENT\s*ID|ID\s*PEMBAYARAN)[\s:]*([A-Z0-9]{16,20})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'ovo':
+          // Cari pola "Transaction ID: ABCDEFGHIJKLMNOPQR"
+          for (const line of lines) {
+            const match = line.match(/(?:TRANSACTION\s*ID|ID\s*TRANSAKSI)[\s:]*([A-Z0-9]{16,20})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'dana':
+          // Cari pola "Transaction ID: ABCDEFGHIJKLMNOPQR"
+          for (const line of lines) {
+            const match = line.match(/(?:TRANSACTION\s*ID|ID\s*TRANSAKSI)[\s:]*([A-Z0-9]{16,20})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'shopeepay':
+          // Cari pola "Transaction ID: ABCDEFGHIJKLMNOPQR"
+          for (const line of lines) {
+            const match = line.match(/(?:TRANSACTION\s*ID|ID\s*TRANSAKSI)[\s:]*([A-Z0-9]{16,20})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'linkaja':
+          // Cari pola "Transaction ID: ABCDEFGHIJKLMNOPQR"
+          for (const line of lines) {
+            const match = line.match(/(?:TRANSACTION\s*ID|ID\s*TRANSAKSI)[\s:]*([A-Z0-9]{16,20})/i);
+            if (match && match[1]) {
+              const confidence = calculateRRNConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+      }
+    }
+
+    return bestMatch;
+  }
+
+  // Fungsi untuk menghitung confidence score untuk RRN
+  function calculateRRNConfidence(candidate, line, pattern) {
+    let confidence = 50; // Base confidence
+    
+    // Tingkatkan confidence jika pola mengandung kata kunci RRN
+    if (pattern && pattern.toString().includes('RRN')) {
+      confidence += 30;
+    }
+    
+    // Tingkatkan confidence jika kandidat memiliki panjang yang tepat
+    if (paymentMethod === 'bank') {
+      if (candidate.length >= 12 && candidate.length <= 16) {
+        confidence += 20;
+      }
+    } else {
+      if (candidate.length >= 16 && candidate.length <= 20) {
+        confidence += 20;
+      }
+    }
+    
+    // Tingkatkan confidence jika kandidat adalah angka murni (untuk bank) atau alfanumerik (untuk e-wallet)
+    if (paymentMethod === 'bank') {
+      if (/^[0-9]+$/.test(candidate)) {
+        confidence += 15;
+      }
+    } else {
+      if (/^[A-Z0-9]+$/.test(candidate)) {
+        confidence += 15;
+      }
+    }
+    
+    return Math.min(confidence, 100); // Maksimal confidence adalah 100
+  }
+
+  // Fungsi untuk mengekstrak nomor referensi dengan confidence score
+  function extractReferenceWithConfidence(lines, bank, paymentMethod) {
+    let bestMatch = { value: "-", confidence: 0 };
+    
+    if (paymentMethod === 'bank') {
+      // Pola untuk referensi bank
+      const refPatterns = [
+        /(REF|Reference|Referensi|No\. Ref|Nomor Referensi)[\s:]*([0-9]{10,16})/i,
+        /(?:NO|NO\.)?\s*REF[\s:]*([0-9]{10,16})/i,
+        /([0-9]{10,16})/, // Cari angka 10-16 digit
+      ];
+
+      for (let line of lines) {
+        for (const pattern of refPatterns) {
+          const match = line.match(pattern);
+          if (match) {
+            // Jika pola memiliki grup kedua, ambil grup kedua
+            const candidate = match.length > 2 ? match[2] : match[1];
+            
+            // Pastikan bukan format tanggal (ddmmyyyy atau yyyymmdd)
+            if (!/^(\d{2})(\d{2})(\d{4})$/.test(candidate) && 
+                !/^(\d{4})(\d{2})(\d{2})$/.test(candidate)) {
+              const confidence = calculateReferenceConfidence(candidate, line, pattern);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: candidate, confidence };
+              }
+            }
+          }
+        }
+      }
+      
+      // Cari pola khusus untuk setiap bank
+      switch(bank) {
+        case 'bca':
+          // Cari pola "NO. REF: 1234567890"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*REF|REF)[\s:]*([0-9]{10,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateReferenceConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bni':
+          // Cari pola "NO. REF: 1234567890"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*REF|REF)[\s:]*([0-9]{10,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateReferenceConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'bri':
+          // Cari pola "NO. REF: 1234567890"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*REF|REF)[\s:]*([0-9]{10,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateReferenceConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+          
+        case 'mandiri':
+          // Cari pola "NO. REF: 1234567890"
+          for (const line of lines) {
+            const match = line.match(/(?:NO\.?\s*REF|REF)[\s:]*([0-9]{10,16})/i);
+            if (match && match[1]) {
+              const confidence = calculateReferenceConfidence(match[1], line, match[0]);
+              
+              if (confidence > bestMatch.confidence) {
+                bestMatch = { value: match[1], confidence };
+              }
+            }
+          }
+          break;
+      }
+    } else {
+      // Untuk e-wallet, referensi biasanya sama dengan RRN/QRIS
+      bestMatch = { value: "-", confidence: 0 };
+    }
+
+    return bestMatch;
+  }
+
+  // Fungsi untuk menghitung confidence score untuk nomor referensi
+  function calculateReferenceConfidence(candidate, line, pattern) {
+    let confidence = 50; // Base confidence
+    
+    // Tingkatkan confidence jika pola mengandung kata kunci REF
+    if (pattern && pattern.toString().includes('REF')) {
+      confidence += 30;
+    }
+    
+    // Tingkatkan confidence jika kandidat memiliki panjang yang tepat
+    if (candidate.length >= 10 && candidate.length <= 16) {
+      confidence += 20;
+    }
+    
+    // Tingkatkan confidence jika kandidat adalah angka murni
+    if (/^[0-9]+$/.test(candidate)) {
+      confidence += 15;
+    }
+    
+    return Math.min(confidence, 100); // Maksimal confidence adalah 100
+  }
+
+  // Fungsi untuk mengekstrak nominal dengan confidence score
+  function extractAmountWithConfidence(lines, bank, paymentMethod) {
+    let bestMatch = { value: "-", confidence: 0 };
+    
+    for (let line of lines) {
+      // Pola untuk nominal dengan format Rp
+      const match = line.match(/(Rp|RP|IDR|idr)[\s]*([0-9.,]+)/i);
+      if (match) {
+        const candidate = `Rp ${formatAmount(match[2])}`;
+        const confidence = calculateAmountConfidence(candidate, line, match[0]);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: candidate, confidence };
+        }
+      }
+
+      // Pola untuk nominal dengan format angka saja
+      const amountMatch = line.match(/([0-9]{1,3}(\.?[0-9]{3})*(\,?[0-9]{2})?)/);
+      if (amountMatch && parseFloat(amountMatch[0].replace(/\./g, '').replace(/,/g, '.')) > 1000) {
+        const candidate = `Rp ${formatAmount(amountMatch[0])}`;
+        const confidence = calculateAmountConfidence(candidate, line, amountMatch[0]);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: candidate, confidence };
+        }
+      }
+    }
+    
+    return bestMatch;
+  }
+
+  // Fungsi untuk menghitung confidence score untuk nominal
+  function calculateAmountConfidence(candidate, line, pattern) {
+    let confidence = 50; // Base confidence
+    
+    // Tingkatkan confidence jika pola mengandung kata kunci Rp
+    if (pattern && (pattern.includes('Rp') || pattern.includes('IDR'))) {
+      confidence += 30;
+    }
+    
+    // Tingkatkan confidence jika kandidat memiliki format yang tepat
+    if (candidate.includes('Rp') || candidate.includes('IDR')) {
+      confidence += 20;
+    }
+    
+    // Tingkatkan confidence jika kandidat memiliki nilai yang wajar (> 1000)
+    const amount = parseFloat(candidate.replace(/[^\d.,]/g, '').replace(/\./g, '').replace(/,/g, '.'));
+    if (amount > 1000) {
+      confidence += 15;
+    }
+    
+    return Math.min(confidence, 100); // Maksimal confidence adalah 100
+  }
+
+  // Fungsi untuk mengekstrak tanggal dan waktu dengan confidence score
+  function extractDateWithConfidence(lines, bank, paymentMethod) {
+    let bestMatch = { value: "-", confidence: 0 };
+    
+    for (let line of lines) {
+      // Pola untuk tanggal dan waktu
+      const dateMatch = line.match(/(\d{2}[\/\-\.]\d{2}[\/\-\.]\d{4})[\s]+(\d{2}:\d{2}:\d{2})/i);
+      if (dateMatch) {
+        const candidate = `${dateMatch[1]} ${dateMatch[2]}`;
+        const confidence = calculateDateConfidence(candidate, line, dateMatch[0]);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: candidate, confidence };
+        }
+      }
+
+      // Pola untuk tanggal saja
+      const dateOnlyMatch = line.match(/(\d{2}[\/\-\.]\d{2}[\/\-\.]\d{4})/i);
+      if (dateOnlyMatch) {
+        const candidate = dateOnlyMatch[1];
+        const confidence = calculateDateConfidence(candidate, line, dateOnlyMatch[0]);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: candidate, confidence };
+        }
+      }
+
+      // Pola untuk waktu saja
+      const timeMatch = line.match(/(\d{2}:\d{2}:\d{2})/i);
+      if (timeMatch) {
+        const candidate = timeMatch[1];
+        const confidence = calculateDateConfidence(candidate, line, timeMatch[0]);
+        
+        if (confidence > bestMatch.confidence) {
+          bestMatch = { value: candidate, confidence };
+        }
+      }
+    }
+    
+    return bestMatch;
+  }
+
+  // Fungsi untuk menghitung confidence score untuk tanggal dan waktu
+  function calculateDateConfidence(candidate, line, pattern) {
+    let confidence = 50; // Base confidence
+    
+    // Tingkatkan confidence jika pola mengandung format tanggal yang lengkap
+    if (pattern && pattern.includes(':')) {
+      confidence += 30; // Format tanggal dan waktu
+    } else if (pattern && /[\/\-\.]/.test(pattern)) {
+      confidence += 20; // Format tanggal saja
+    }
+    
+    // Tingkatkan confidence jika kandidat memiliki format yang tepat
+    if (/^\d{2}[\/\-\.]\d{2}[\/\-\.]\d{4}$/.test(candidate)) {
+      confidence += 15; // Format tanggal
+    } else if (/^\d{2}:\d{2}:\d{2}$/.test(candidate)) {
+      confidence += 10; // Format waktu
+    }
+    
+    return Math.min(confidence, 100); // Maksimal confidence adalah 100
+  }
+
+  // Fungsi untuk menghasilkan saran perbaikan
+  function generateSuggestions(field, data) {
+    const suggestionsContainer = document.getElementById(`${field}Suggestions`);
+    suggestionsContainer.innerHTML = '';
+    
+    if (!data || !data.value || data.value === '-') {
+      return;
+    }
+    
+    // Generate suggestions based on field type
+    let suggestions = [];
+    
+    switch(field) {
+      case 'merchant':
+        suggestions = generateMerchantSuggestions(data.value);
+        break;
+      case 'rrn':
+        suggestions = generateRRNSuggestions(data.value);
+        break;
+      case 'reference':
+        suggestions = generateReferenceSuggestions(data.value);
+        break;
+      case 'amount':
+        suggestions = generateAmountSuggestions(data.value);
+        break;
+      case 'date':
+        suggestions = generateDateSuggestions(data.value);
+        break;
+    }
+    
+    // Add suggestion chips to the container
+    suggestions.forEach(suggestion => {
+      const chip = document.createElement('div');
+      chip.className = 'suggestion-chip';
+      chip.textContent = suggestion;
+      chip.addEventListener('click', function() {
+        document.getElementById(`${field}Edit`).value = suggestion;
+      });
+      suggestionsContainer.appendChild(chip);
+    });
+  }
+
+  // Fungsi untuk menghasilkan saran nama merchant
+  function generateMerchantSuggestions(value) {
+    const suggestions = [];
+    
+    // Jika nilai terlalu pendek, tambahkan saran untuk memperbaiki
+    if (value.length < 5) {
+      suggestions.push('Periksa kembali nama merchant yang sebenarnya');
+    }
+    
+    // Jika nilai mengandung karakter aneh, tambahkan saran untuk memperbaiki
+    if (/[^A-Z\s&.,'-]/.test(value)) {
+      suggestions.push('Hapus karakter khusus yang tidak seharusnya ada');
+    }
+    
+    // Jika nilai terlalu panjang, tambahkan saran untuk memperbaiki
+    if (value.length > 30) {
+      suggestions.push('Periksa apakah ada bagian yang bukan bagian dari nama merchant');
+    }
+    
+    return suggestions;
+  }
+
+  // Fungsi untuk menghasilkan saran RRN
+  function generateRRNSuggestions(value) {
+    const suggestions = [];
+    
+    // Jika nilai tidak sesuai format, tambahkan saran untuk memperbaiki
+    if (paymentType === 'bank') {
+      if (!/^[0-9]{12,16}$/.test(value)) {
+        suggestions.push('RRN harus berupa angka 12-16 digit');
+      }
+    } else {
+      if (!/^[A-Z0-9]{16,20}$/.test(value)) {
+        suggestions.push('Kode QRIS harus berupa alfanumerik 16-20 karakter');
+      }
+    }
+    
+    return suggestions;
+  }
+
+  // Fungsi untuk menghasilkan saran nomor referensi
+  function generateReferenceSuggestions(value) {
+    const suggestions = [];
+    
+    // Jika nilai tidak sesuai format, tambahkan saran untuk memperbaiki
+    if (paymentType === 'bank') {
+      if (!/^[0-9]{10,16}$/.test(value)) {
+        suggestions.push('Nomor referensi harus berupa angka 10-16 digit');
+      }
+    }
+    
+    return suggestions;
+  }
+
+  // Fungsi untuk menghasilkan saran nominal
+  function generateAmountSuggestions(value) {
+    const suggestions = [];
+    
+    // Jika nilai tidak sesuai format, tambahkan saran untuk memperbaiki
+    if (!value.includes('Rp') && !value.includes('IDR')) {
+      suggestions.push('Tambahkan mata uang (Rp atau IDR)');
+    }
+    
+    // Jika nilai tidak memiliki format ribuan yang benar, tambahkan saran untuk memperbaiki
+    const amount = value.replace(/[^\d.,]/g, '').replace(/\./g, '').replace(/,/g, '.');
+    if (parseFloat(amount) < 1000) {
+      suggestions.push('Periksa kembali nominal transfer');
+    }
+    
+    return suggestions;
+  }
+
+  // Fungsi untuk menghasilkan saran tanggal
+  function generateDateSuggestions(value) {
+    const suggestions = [];
+    
+    // Jika nilai tidak sesuai format, tambahkan saran untuk memperbaiki
+    if (!/^\d{2}[\/\-\.]\d{2}[\/\-\.]\d{4}$/.test(value) && 
+        !/^\d{2}:\d{2}:\d{2}$/.test(value) && 
+        !/^\d{2}[\/\-\.]\d{2}[\/\-\.]\d{4}\s\d{2}:\d{2}:\d{2}$/.test(value)) {
+      suggestions.push('Format tanggal harus DD/MM/YYYY atau DD-MM-YYYY');
+      suggestions.push('Format waktu harus HH:MM:SS');
+    }
+    
+    return suggestions;
+  }
+
+  // Event listener untuk tombol salin
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-copy');
+      const targetElement = document.getElementById(targetId);
+      const textToCopy = targetElement.textContent;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showNotification('Teks berhasil disalin');
+      }).catch(err => {
+        showNotification('Gagal menyalin teks');
+      });
+    });
+  });
+
+  // Event listener untuk tombol reset
+  resetBtn.addEventListener('click', function() {
+    imagePreview.src = '';
+    imagePreview.style.display = 'none';
+    uploadedImage = null;
+    bankSelect.value = '';
+    imageUrlTransfer.value = '';
+    merchantResult.textContent = '-';
+    rrnResult.textContent = '-';
+    referenceResult.textContent = '-';
+    amountResult.textContent = '-';
+    dateResult.textContent = '-';
+    transferResultContainer.style.display = 'none';
+    progressBar.style.display = 'none';
+    ocrStatus.style.display = 'none';
+    bankPatterns.style.display = 'none';
+    debugSection.style.display = 'none';
+    extractedText = '';
+    extractedData = {};
+    
+    // Reset confidence indicators
+    updateConfidenceIndicator('merchant', 0);
+    updateConfidenceIndicator('rrn', 0);
+    updateConfidenceIndicator('reference', 0);
+    updateConfidenceIndicator('amount', 0);
+    updateConfidenceIndicator('date', 0);
+    
+    // Reset result item status
+    updateResultItemStatus('merchant', 0);
+    updateResultItemStatus('rrn', 0);
+    updateResultItemStatus('reference', 0);
+    updateResultItemStatus('amount', 0);
+    updateResultItemStatus('date', 0);
+    
+    // Hide advanced edit sections
+    merchantAdvanced.style.display = 'none';
+    rrnAdvanced.style.display = 'none';
+    referenceAdvanced.style.display = 'none';
+    amountAdvanced.style.display = 'none';
+    dateAdvanced.style.display = 'none';
+  });
+
+  // Event listener untuk tombol unduh
+  downloadBtn.addEventListener('click', function() {
+    const merchant = merchantResult.textContent;
+    const rrn = rrnResult.textContent;
+    const reference = referenceResult.textContent;
+    const amount = amountResult.textContent;
+    const date = dateResult.textContent;
+
+    if (merchant === '-' || rrn === '-' || reference === '-' || amount === '-' || date === '-') {
+      showNotification('Tidak ada data untuk diunduh');
+      return;
+    }
+
+    const paymentMethod = paymentType.value === 'bank' ? 'Transfer Bank' : 'E-Wallet/QRIS';
+    const content = `Informasi Bukti ${paymentMethod}\n\nNama Merchant: ${merchant}\nRRN/QRIS: ${rrn}\nNomor Referensi: ${reference}\nNominal Transfer: ${amount}\nTanggal & Waktu: ${date}`;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'informasi_transfer.txt';
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    showNotification('File berhasil diunduh');
+  });
+
+  // Event listener untuk edit manual
+  document.querySelectorAll('.edit-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-edit');
+      const inputElement = document.getElementById(targetId.replace('Result', 'Input'));
+      inputElement.style.display = 'block';
+    });
+  });
+
+  // Event listener untuk simpan edit manual
+  document.querySelectorAll('.save-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const target = this.getAttribute('data-save');
+      const inputElement = document.getElementById(`${target}Edit`);
+      const resultElement = document.getElementById(`${target}Result`);
+      
+      resultElement.textContent = inputElement.value || '-';
+      document.getElementById(`${target}Input`).style.display = 'none';
+      
+      showNotification('Perubahan berhasil disimpan');
+    });
+  });
+
+  // Event listener untuk tombol close advanced edit
+  document.getElementById('closeMerchantAdvanced').addEventListener('click', function() {
+    merchantAdvanced.style.display = 'none';
+  });
+
+  document.getElementById('closeRrnAdvanced').addEventListener('click', function() {
+    rrnAdvanced.style.display = 'none';
+  });
+
+  document.getElementById('closeReferenceAdvanced').addEventListener('click', function() {
+    referenceAdvanced.style.display = 'none';
+  });
+
+  document.getElementById('closeAmountAdvanced').addEventListener('click', function() {
+    amountAdvanced.style.display = 'none';
+  });
+
+  document.getElementById('closeDateAdvanced').addEventListener('click', function() {
+    dateAdvanced.style.display = 'none';
+  });
+
+  // Fungsi untuk memformat nominal
+  function formatAmount(amount) {
+    // Hilangkan titik (separator ribuan) dan ganti koma dengan titik (separator desimal)
+    const cleaned = amount.replace(/\./g, '').replace(/,/g, '.');
+    // Format kembali dengan separator ribuan
+    const number = parseFloat(cleaned);
+    return isNaN(number) ? amount : number.toLocaleString('id-ID');
+  }
+});
+</script>
+</body>
+</html>

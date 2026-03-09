@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIKIK AYA - Premium Prediction System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2691E;
+            --accent: #FFD700;
+            --light: #FFFFFF;
+            --dark: #2F4F4F;
+            --success: #32CD32;
+            --warning: #FFA500;
+            --danger: #FF4444;
+            --gradient-start: #8B4513;
+            --gradient-end: #D2691E;
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --text-light: #F8F8F8;
+            --text-dark: #333;
+            --glow: rgba(139, 69, 19, 0.5);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --gold: #FFD700;
+            --bronze: #CD7F32;
+            --hoki-primary: #6A1B9A;
+            --hoki-secondary: #9C27B0;
+            --hoki-light: #CE93D8;
+            --hoki-bg: #4A148C;
+            --hoki-gradient: linear-gradient(135deg, #6A1B9A, #9C27B0, #CE93D8);
+            --hoki-dark-gradient: linear-gradient(135deg, #4A148C, #6A1B9A, #9C27B0);
+            --neon-purple: #9D4EDD;
+            --neon-pink: #FF006E;
+            --neon-blue: #00F5FF;
+            --neon-green: #39FF14;
+            --cosmic-purple: #1A0033;
+            --cosmic-blue: #0A0E27;
+            --aurora-pink: #FF10F0;
+            --aurora-blue: #00D9FF;
+            --aurora-green: #39FF14;
+            --matrix-green: #00FF41;
+        }
+
+        body {
+            background: url('https://i.postimg.cc/KjXcTBn1/linetogel-slider-natal2025.webp') center fixed;
+            background-image: url('https://i.postimg.cc/KjXcTBn1/linetogel-slider-natal2025.webp');
+            background-size: tille;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-light);
+            position: tille;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--gold), transparent);
+            opacity: 0.12;
+            animation: floatElement 25s infinite linear;
+            filter: blur(3px);
+            mix-blend-mode: screen;
+        }
+
+        .floating-element:nth-child(odd) {
+            background: radial-gradient(circle, var(--neon-purple), transparent);
+            animation-duration: 30s;
+        }
+
+        .floating-element:nth-child(even) {
+            background: radial-gradient(circle, var(--neon-pink), transparent);
+            animation-duration: 35s;
+        }
+
+        .floating-element:nth-child(3n) {
+            background: radial-gradient(circle, var(--neon-blue), transparent);
+            animation-duration: 40s;
+        }
+
+        @keyframes floatElement {
+            0% { 
+                transform: translate(0, 0) rotate(0deg) scale(1); 
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.12;
+            }
+            90% {
+                opacity: 0.12;
+            }
+            25% { transform: translate(100px, -25vh) rotate(90deg) scale(1.2); }
+            50% { transform: translate(200px, -50vh) rotate(180deg) scale(0.8); }
+            75% { transform: translate(100px, -75vh) rotate(270deg) scale(1.1); }
+            100% { 
+                transform: translate(0, -100vh) rotate(360deg) scale(1); 
+                opacity: 0;
+            }
+        }
+
+        /* Advanced Particle System */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: particleFloat 20s infinite linear;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .particle:nth-child(2n) {
+            background: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple);
+            animation-duration: 25s;
+        }
+
+        .particle:nth-child(3n) {
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation-duration: 30s;
+        }
+
+        .particle:nth-child(4n) {
+            background: var(--aurora-green);
+            box-shadow: 0 0 10px var(--aurora-green);
+            animation-duration: 22s;
+        }
+
+        @keyframes particleFloat {
+            0% { 
+                transform: translateY(100vh) translateX(0) scale(0); 
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateY(-100vh) translateX(100px) scale(0); 
+                opacity: 0;
+            }
+        }
+
+        /* Aurora Background Effect */
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .aurora-layer {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            border-radius: 50%;
+            filter: blur(80px);
+            mix-blend-mode: screen;
+        }
+
+        .aurora-layer:nth-child(1) {
+            background: radial-gradient(ellipse at center, var(--aurora-pink) 0%, transparent 70%);
+            animation: auroraMove 20s ease-in-out infinite;
+        }
+
+        .aurora-layer:nth-child(2) {
+            background: radial-gradient(ellipse at center, var(--aurora-blue) 0%, transparent 70%);
+            animation: auroraMove 25s ease-in-out infinite reverse;
+        }
+
+        .aurora-layer:nth-child(3) {
+            background: radial-gradient(ellipse at center, var(--aurora-green) 0%, transparent 70%);
+            animation: auroraMove 30s ease-in-out infinite;
+        }
+
+        @keyframes auroraMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(10%, -10%) rotate(120deg) scale(1.1); }
+            66% { transform: translate(-10%, 10%) rotate(240deg) scale(0.9); }
+        }
+
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--matrix-green);
+            animation: matrixFall linear infinite;
+        }
+
+        @keyframes matrixFall {
+            to { transform: translateY(200vh); }
+        }
+
+        /* Ultra Premium Container */
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-radius: 35px;
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.9),
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 120px rgba(157, 78, 221, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 550px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            animation: containerSlide 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 10;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--gold), 
+                var(--neon-purple), 
+                var(--neon-blue), 
+                var(--gold), 
+                transparent);
+            z-index: 11;
+            animation: borderGlow 4s ease-in-out infinite;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                transparent 70%);
+            animation: containerShimmer 8s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes containerShimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(200%) rotate(45deg); }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { 
+                opacity: 0.7; 
+                box-shadow: 0 0 15px var(--gold), 0 0 30px var(--neon-purple);
+            }
+            50% { 
+                opacity: 1; 
+                box-shadow: 0 0 25px var(--gold), 0 0 50px var(--neon-purple), 0 0 75px var(--neon-blue);
+            }
+        }
+
+        @keyframes containerSlide {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-80px) rotateX(15deg) scale(0.8); 
+            }
+            50% {
+                transform: translateY(20px) rotateX(-5deg) scale(1.05);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) rotateX(0) scale(1); 
+            }
+        }
+
+        /* Ultra Premium Header */
+        .header {
+            background: linear-gradient(135deg, 
+                var(--primary) 0%, 
+                var(--secondary) 30%, 
+                var(--accent) 60%,
+                var(--neon-purple) 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.2) 40%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.2) 60%,
+                transparent 80%
+            );
+            transform: translateX(-100%);
+            animation: shimmer 5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) skewX(-30deg); }
+            100% { transform: translateX(200%) skewX(-30deg); }
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 
+                0 5px 20px rgba(0, 0, 0, 0.7),
+                0 0 40px rgba(255, 215, 0, 0.6),
+                0 0 60px rgba(157, 78, 221, 0.4);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 4px;
+            position: relative;
+            animation: titlePulse 4s ease-in-out infinite;
+            background: linear-gradient(90deg, var(--gold), var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.08); 
+                filter: brightness(1.2);
+            }
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 25px;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--neon-purple), var(--neon-blue), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.6));
+            animation: logoFloat 5s ease-in-out infinite;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--gold), 
+                var(--neon-purple), 
+                var(--neon-blue),
+                transparent);
+            animation: lineGlow 3s ease-in-out infinite alternate;
+            border-radius: 5px;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-15px) rotate(5deg) scale(1.05); 
+            }
+            75% { 
+                transform: translateY(-5px) rotate(-3deg) scale(1.02); 
+            }
+        }
+
+        @keyframes lineGlow {
+            0% { 
+                opacity: 0.5; 
+                width: 60%; 
+                box-shadow: 0 0 10px var(--gold);
+            }
+            100% { 
+                opacity: 1; 
+                width: 80%; 
+                box-shadow: 0 0 20px var(--gold), 0 0 40px var(--neon-purple);
+            }
+        }
+
+        /* Ultra Premium Form */
+        .form-container {
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 18px;
+            color: var(--light);
+            font-weight: 700;
+            font-size: 20px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+            padding-left: 20px;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .form-group label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 90%;
+            background: linear-gradient(to bottom, var(--gold), var(--neon-purple), var(--neon-blue));
+            border-radius: 3px;
+            animation: labelGlow 3s ease-in-out infinite alternate;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        @keyframes labelGlow {
+            0% { 
+                box-shadow: 0 0 10px var(--gold); 
+                transform: translateY(-50%) scaleY(1);
+            }
+            100% { 
+                box-shadow: 0 0 25px var(--gold), 0 0 40px var(--neon-purple); 
+                transform: translateY(-50%) scaleY(1.1);
+            }
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 24px;
+            z-index: 1;
+            text-shadow: 0 0 15px var(--gold);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { 
+                transform: translateY(-50%) scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: translateY(-50%) scale(1.15); 
+                filter: brightness(1.3);
+            }
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 25px 30px 25px 75px;
+            border: 3px solid rgba(255, 255, 255, 0.25);
+            border-radius: 25px;
+            font-size: 18px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--light);
+            font-weight: 600;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .input-with-icon input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .input-with-icon input:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 
+                0 0 0 5px rgba(255, 215, 0, 0.3),
+                0 0 0 10px rgba(157, 78, 221, 0.2),
+                0 20px 45px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        /* Ultra Premium Buttons */
+        .login-btn {
+            background: linear-gradient(135deg, 
+                var(--primary) 0%, 
+                var(--secondary) 30%, 
+                var(--accent) 60%,
+                var(--neon-purple) 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 25px;
+            font-size: 22px;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 20px;
+            box-shadow: 
+                0 15px 35px rgba(139, 69, 19, 0.7),
+                0 0 40px rgba(255, 215, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            transition: 1s ease;
+        }
+
+        .login-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            transform: translate(-50%, -50%);
+            transition: all 1s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(139, 69, 19, 0.9),
+                0 0 60px rgba(255, 215, 0, 0.6),
+                0 0 100px rgba(157, 78, 221, 0.4);
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover::after {
+            width: 500px;
+            height: 500px;
+        }
+
+        .login-btn:active {
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        /* Enhanced Messages */
+        .message {
+            text-align: center;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 17px;
+            display: none;
+            animation: messageSlide 0.8s ease;
+            backdrop-filter: blur(20px);
+            border-left: 6px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: messageShimmer 4s infinite;
+        }
+
+        @keyframes messageShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes messageSlide {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .error {
+            color: #ff7a7a;
+            border-left-color: #ff7a7a;
+            background: rgba(245, 101, 101, 0.25) !important;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.4);
+        }
+
+        .success {
+            color: #6de6a3;
+            border-left-color: #6de6a3;
+            background: rgba(72, 187, 120, 0.25) !important;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        /* Ultra Premium Dashboard */
+        .dashboard {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at top left, rgba(157, 78, 221, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(255, 0, 110, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at center, rgba(0, 245, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(57, 255, 20, 0.1) 0%, transparent 40%),
+                linear-gradient(135deg, #0A0E27 0%, #1A0033 50%, #0F0817 100%),
+                url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 40px;
+            position: relative;
+        }
+
+        .dashboard-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--gold), 
+                var(--neon-purple), 
+                var(--neon-blue),
+                var(--gold), 
+                transparent);
+            animation: headerLineGlow 4s ease-in-out infinite;
+            border-radius: 5px;
+        }
+
+        @keyframes headerLineGlow {
+            0%, 100% { 
+                opacity: 0.7; 
+                box-shadow: 0 0 15px var(--gold), 0 0 30px var(--neon-purple);
+            }
+            50% { 
+                opacity: 1; 
+                box-shadow: 0 0 25px var(--gold), 0 0 50px var(--neon-purple), 0 0 75px var(--neon-blue);
+            }
+        }
+
+        .dashboard-header h2 {
+            font-size: 58px;
+            margin-bottom: 20px;
+            text-shadow: 
+                0 5px 20px rgba(0, 0, 0, 0.7),
+                0 0 40px rgba(255, 215, 0, 0.5),
+                0 0 60px rgba(157, 78, 221, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 4px;
+            animation: dashboardTitleFloat 5s ease-in-out infinite;
+            background: linear-gradient(90deg, var(--gold), var(--neon-purple), var(--neon-blue), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes dashboardTitleFloat {
+            0%, 100% { 
+                transform: translateY(0) scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: translateY(-15px) scale(1.02); 
+                filter: brightness(1.2);
+            }
+        }
+
+        .dashboard-header p {
+            font-size: 28px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Ultra HOKIDRAW Generator Container */
+        .hoki-generator-container {
+            background: var(--hoki-dark-gradient);
+            border-radius: 40px;
+            padding: 70px;
+            margin: 0 auto;
+            max-width: 800px;
+            box-shadow: 
+                0 50px 100px rgba(106, 27, 154, 0.8),
+                0 0 150px rgba(156, 39, 176, 0.5),
+                0 0 200px rgba(206, 147, 216, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 4px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            animation: hokiGlow 5s ease-in-out infinite alternate;
+            backdrop-filter: blur(25px);
+        }
+
+        @keyframes hokiGlow {
+            0% { 
+                box-shadow: 
+                    0 50px 100px rgba(106, 27, 154, 0.8),
+                    0 0 150px rgba(156, 39, 176, 0.5),
+                    0 0 200px rgba(206, 147, 216, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            }
+            100% { 
+                box-shadow: 
+                    0 50px 100px rgba(156, 39, 176, 1),
+                    0 0 200px rgba(206, 147, 216, 0.6),
+                    0 0 300px rgba(206, 147, 216, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .hoki-generator-container::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: var(--hoki-gradient);
+            border-radius: 40px;
+            z-index: -1;
+            animation: hokiBorder 5s linear infinite;
+        }
+
+        @keyframes hokiBorder {
+            0%, 100% { 
+                opacity: 0.8; 
+                transform: scale(1); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.02); 
+            }
+        }
+
+        .hoki-generator-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--hoki-light), 
+                var(--hoki-secondary), 
+                var(--hoki-primary), 
+                transparent);
+            animation: hokiShimmer 3s linear infinite;
+        }
+
+        @keyframes hokiShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .hoki-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 60px;
+            text-shadow: 
+                0 6px 25px rgba(0, 0, 0, 0.7),
+                0 0 50px rgba(206, 147, 216, 0.7);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+            position: relative;
+            animation: titleFloat 5s ease-in-out infinite;
+            background: linear-gradient(90deg, var(--hoki-light), var(--hoki-secondary), var(--hoki-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { 
+                transform: translateY(0) scale(1); 
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.02); 
+            }
+        }
+
+        .hoki-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -80px;
+            width: 60px;
+            height: 60px;
+            background: var(--hoki-gradient);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            animation: pulse 2.5s infinite;
+            box-shadow: 0 0 30px var(--hoki-light);
+        }
+
+        .hoki-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -80px;
+            width: 60px;
+            height: 60px;
+            background: var(--hoki-gradient);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            animation: pulse 2.5s infinite 0.8s;
+            box-shadow: 0 0 30px var(--hoki-light);
+        }
+
+        /* Ultra HOKIDRAW Select */
+        .hoki-select-wrapper {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .hoki-select {
+            width: 100%;
+            padding: 35px 40px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            border: 3px solid rgba(206, 147, 216, 0.6);
+            border-radius: 30px;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            appearance: none;
+            position: relative;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hoki-select-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 18px solid var(--hoki-light);
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+            transition: all 0.4s ease;
+            z-index: 2;
+        }
+
+        .hoki-select:focus {
+            outline: none;
+            border-color: var(--hoki-light);
+            box-shadow: 
+                0 0 0 6px rgba(206, 147, 216, 0.4),
+                0 0 0 12px rgba(156, 39, 176, 0.2),
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .hoki-select option {
+            background: var(--hoki-bg);
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+        }
+
+        /* Ultra HOKIDRAW Buttons */
+        .hoki-btn {
+            width: 100%;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 0, 0.2), 
+                rgba(255, 0, 0, 0.3));
+            border: 4px solid #FF0000;
+            border-radius: 30px;
+            color: white;
+            font-size: 24px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-bottom: 35px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 15px 35px rgba(255, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hoki-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            transition: 0.8s ease;
+        }
+
+        .hoki-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+            transform: translate(-50%, -50%);
+            transition: all 0.8s ease;
+        }
+
+        .hoki-btn:hover {
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 0, 0.4), 
+                rgba(255, 0, 0, 0.5));
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(255, 0, 0, 0.6),
+                0 0 80px rgba(255, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .hoki-btn:hover::before {
+            left: 100%;
+        }
+
+        .hoki-btn:hover::after {
+            width: 500px;
+            height: 500px;
+        }
+
+        .hoki-btn:active {
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        /* Ultra HOKIDRAW Result Container */
+        .hoki-result-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(25px);
+            border-radius: 35px;
+            padding: 60px;
+            margin-top: 60px;
+            border: 3px solid rgba(206, 147, 216, 0.5);
+            max-height: 700px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .hoki-result-container.active {
+            display: block;
+            animation: slideIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .hoki-result-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--hoki-gradient);
+            border-radius: 35px 35px 0 0;
+        }
+
+        /* Ultra HOKIDROW Result Item */
+        .hoki-result-item {
+            background: linear-gradient(135deg, 
+                rgba(106, 27, 154, 0.3), 
+                rgba(156, 39, 176, 0.2));
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 35px;
+            border: 2px solid rgba(206, 147, 216, 0.5);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hoki-result-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(206, 147, 216, 0.2), 
+                transparent);
+            transition: 1s ease;
+        }
+
+        .hoki-result-item:hover {
+            background: linear-gradient(135deg, 
+                rgba(106, 27, 154, 0.4), 
+                rgba(156, 39, 176, 0.3));
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(106, 27, 154, 0.5),
+                0 0 50px rgba(156, 39, 176, 0.3);
+        }
+
+        .hoki-result-item:hover::before {
+            left: 100%;
+        }
+
+        .hoki-result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .hoki-result-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid var(--hoki-secondary);
+            position: relative;
+        }
+
+        .hoki-result-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: var(--hoki-light);
+        }
+
+        .hoki-result-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--hoki-light);
+            margin-bottom: 15px;
+            text-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(206, 147, 216, 0.6);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        @keyframes titleGlow {
+            0% { 
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(206, 147, 216, 0.6); 
+            }
+            100% { 
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 50px rgba(206, 147, 216, 0.9); 
+            }
+        }
+
+        .hoki-result-date {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .hoki-result-content {
+            font-family: 'Courier New', monospace;
+            line-height: 2.5;
+        }
+
+        .hoki-result-line {
+            display: flex;
+            margin-bottom: 20px;
+            padding: 15px 0;
+            border-bottom: 1px dashed rgba(206, 147, 216, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .hoki-result-line:hover {
+            background: rgba(206, 147, 216, 0.15);
+            padding-left: 15px;
+            border-radius: 15px;
+        }
+
+        .hoki-result-line:last-child {
+            border-bottom: none;
+        }
+
+        .hoki-result-label {
+            font-weight: 900;
+            color: var(--hoki-light);
+            min-width: 250px;
+            font-size: 22px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .hoki-result-value {
+            font-weight: 800;
+            color: white;
+            font-size: 22px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Ultra HOKIDRAW Copy Button */
+        .hoki-copy-btn {
+            width: 100%;
+            padding: 30px 40px;
+            background: var(--hoki-gradient);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 50px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: none;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            box-shadow: 
+                0 15px 35px rgba(106, 27, 154, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hoki-copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            transition: 0.8s ease;
+        }
+
+        .hoki-copy-btn.active {
+            display: block;
+            animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.3); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.05); 
+            }
+            70% { 
+                transform: scale(0.9); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        .hoki-copy-btn:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(106, 27, 154, 0.7),
+                0 0 50px rgba(156, 39, 176, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .hoki-copy-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Ultra Premium Tabs */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 18px;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tab {
+            padding: 20px 45px;
+            background: transparent;
+            border: none;
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.7s ease;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        /* Warna khusus untuk tab HOKIDRAW */
+        .tab.hoki-tab.active {
+            background: var(--hoki-gradient);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+        }
+
+        .tab.hoki-tab.active::after {
+            background: var(--hoki-light);
+        }
+
+        /* Ultra Premium Generator Container */
+        .generator-container {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 35px;
+            padding: 50px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            margin: 0 auto 50px;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .generator-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-purple), var(--neon-blue), var(--gold));
+            border-radius: 35px 35px 0 0;
+        }
+
+        .generator-container:hover {
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .generator-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .generator-header h3 {
+            font-size: 40px;
+            margin-bottom: 25px;
+            color: var(--gold);
+            text-shadow: 
+                0 3px 12px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(255, 215, 0, 0.5);
+            font-weight: 800;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .generator-header h3::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* Ultra Premium Select */
+        .pasaran-select {
+            width: 100%;
+            padding: 25px 35px;
+            border-radius: 25px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.18);
+            color: #FFFFFF;
+            margin-bottom: 35px;
+            font-size: 20px;
+            font-weight: 600;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='gold' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 30px center;
+            background-size: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .pasaran-select option {
+            background: rgba(47, 79, 79, 0.95);
+            color: #FFFFFF;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .pasaran-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 
+                0 0 0 5px rgba(255, 215, 0, 0.3),
+                0 0 0 10px rgba(157, 78, 221, 0.2),
+                0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        /* Ultra Premium Buttons */
+        .generate-btn, .generate-all-btn {
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 25px 40px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .generate-btn::before, .generate-all-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.8s ease;
+        }
+
+        .generate-btn:hover::before, .generate-all-btn:hover::before {
+            left: 100%;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+
+        .generate-all-btn {
+            background: linear-gradient(135deg, var(--warning), var(--gold), var(--neon-purple));
+        }
+
+        .generate-btn:hover, .generate-all-btn:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .generate-btn:active, .generate-all-btn:active {
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        /* Ultra Premium Prediction Result */
+        .prediction-result {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 30px;
+            padding: 40px;
+            margin-top: 35px;
+            font-family: 'Courier New', monospace;
+            line-height: 2;
+            position: relative;
+            max-height: 550px;
+            overflow-y: auto;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s ease;
+            font-size: 19px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+        }
+
+        .prediction-result:hover {
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Background khusus untuk Sydney */
+        .prediction-result.sydney-bg {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('https://i.postimg.cc/tJPT85fY/dhcv-NDd-QNq-TCAq-Fj-X5o5-A.png') no-repeat center center;
+            background-size: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+            position: relative;
+        }
+
+        /* Background khusus untuk Toto Macau (kecuali 5D) */
+        .prediction-result.totomacau-bg {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('https://i.postimg.cc/PJBrdF9y/YWzt-Gs-NOTVGLZd-Is-HR-QCg.png') no-repeat center center;
+            background-size: cover;
+            border: 4px solid var(--danger);
+            box-shadow: 0 0 40px rgba(255, 68, 68, 0.7);
+            position: relative;
+        }
+
+        /* Overlay untuk meningkatkan keterbacaan teks */
+        .prediction-result.sydney-bg::before,
+        .prediction-result.totomacau-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 30px;
+            z-index: 0;
+        }
+
+        /* Pastikan teks berada di atas overlay */
+        .prediction-result.sydney-bg > *,
+        .prediction-result.totomacau-bg > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .all-predictions-container {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 30px;
+            padding: 40px;
+            margin-top: 35px;
+            font-family: 'Courier New', monospace;
+            line-height: 2;
+            max-height: 650px;
+            overflow-y: auto;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            font-size: 18px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+        }
+
+        .prediction-item {
+            margin-bottom: 40px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s ease;
+            position: relative;
+            padding: 30px;
+            border-radius: 25px;
+        }
+
+        .prediction-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+        }
+
+        .prediction-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Background khusus untuk Sydney di semua prediksi */
+        .prediction-item.sydney-bg {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('https://i.postimg.cc/tJPT85fY/dhcv-NDd-QNq-TCAq-Fj-X5o5-A.png') no-repeat center center;
+            background-size: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.6);
+            position: relative;
+        }
+
+        /* Background khusus untuk Toto Macau di semua prediksi */
+        .prediction-item.totomacau-bg {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('https://i.postimg.cc/PJBrdF9y/YWzt-Gs-NOTVGLZd-Is-HR-QCg.png') no-repeat center center;
+            background-size: cover;
+            border: 4px solid var(--danger);
+            box-shadow: 0 0 35px rgba(255, 68, 68, 0.6);
+            position: relative;
+        }
+
+        /* Overlay untuk meningkatkan keterbacaan teks */
+        .prediction-item.sydney-bg::before,
+        .prediction-item.totomacau-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            z-index: 0;
+        }
+
+        /* Pastikan teks berada di atas overlay */
+        .prediction-item.sydney-bg > *,
+        .prediction-item.totomacau-bg > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ultra Premium Copy Buttons */
+        .copy-btn, .copy-all-btn {
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 25px 35px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 35px;
+            width: 100%;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+
+        .copy-all-btn {
+            background: linear-gradient(135deg, var(--success), #228B22, var(--neon-green));
+        }
+
+        .copy-btn:hover, .copy-all-btn:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ultra Premium Prediction Content */
+        .prediction-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .prediction-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .prediction-date {
+            font-size: 19px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .prediction-name {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 
+                0 3px 10px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(255, 215, 0, 0.5);
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .prediction-line {
+            margin-bottom: 20px;
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .prediction-line:hover {
+            background: rgba(255, 215, 0, 0.08);
+            padding-left: 15px;
+            border-radius: 15px;
+        }
+
+        .prediction-label {
+            font-weight: 800;
+            color: var(--gold);
+            min-width: 220px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            font-size: 20px;
+        }
+
+        .prediction-value {
+            font-weight: 700;
+            color: #fff;
+            font-size: 20px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Ultra Premium Logout Button */
+        .logout-btn {
+            display: block;
+            margin: 60px auto;
+            background: linear-gradient(135deg, var(--accent), var(--warning), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 25px 45px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 250px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Ultra Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 24px;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--gold);
+            transform: translateY(-50%) scale(1.2);
+            text-shadow: 0 0 20px var(--gold);
+        }
+
+        /* Ultra Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 25px 40px;
+            border-radius: 20px;
+            z-index: 10000;
+            display: none;
+            animation: toastIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), toastOut 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 3s;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-left: 6px solid var(--gold);
+            font-weight: 700;
+            max-width: 500px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        @keyframes toastIn {
+            from { 
+                opacity: 0; 
+                transform: translate(-50%, 50px) scale(0.8); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translate(-50%, 0) scale(1); 
+            }
+        }
+
+        @keyframes toastOut {
+            from { 
+                opacity: 1; 
+                transform: translate(-50%, 0) scale(1); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translate(-50%, 50px) scale(0.8); 
+            }
+        }
+
+        /* Ultra Login Instruction */
+        .login-instruction {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 17px;
+            opacity: 0.8;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Ultra Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-purple), var(--neon-blue), var(--gold));
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-number {
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 18px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-family: 'Orbitron', sans-serif;
+            animation: numberPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes numberPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.05); 
+                filter: brightness(1.2);
+            }
+        }
+
+        .stat-label {
+            font-size: 19px;
+            opacity: 0.9;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Ultra Premium Bubble Links */
+        .bubble-links-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            margin: 50px 0;
+        }
+
+        .bubble-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px 0 rgba(31, 38, 135, 0.6);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            animation: bubble-float 12s ease-in-out infinite;
+        }
+
+        .bubble-link:nth-child(1) { animation-delay: 0s; }
+        .bubble-link:nth-child(2) { animation-delay: 3s; }
+        .bubble-link:nth-child(3) { animation-delay: 6s; }
+        .bubble-link:nth-child(4) { animation-delay: 9s; }
+
+        @keyframes bubble-float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-30px) rotate(10deg) scale(1.02); 
+            }
+            75% { 
+                transform: translateY(-15px) rotate(-5deg) scale(1.01); 
+            }
+        }
+
+        .bubble-link::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            border-radius: 50%;
+            animation: glowing-bubble 30s linear infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            filter: blur(12px);
+        }
+
+        .bubble-link:hover::before {
+            opacity: 0.9;
+        }
+
+        .bubble-link:hover {
+            transform: translateY(-30px) scale(1.15) rotate(5deg);
+            box-shadow: 0 30px 60px rgba(31, 38, 135, 0.9);
+        }
+
+        .bubble-link-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+            transition: all 0.6s ease;
+        }
+
+        .bubble-link:hover .bubble-link-icon {
+            transform: scale(1.3) rotate(10deg);
+            text-shadow: 0 0 40px rgba(255, 215, 0, 1);
+        }
+
+        .bubble-link-text {
+            font-size: 19px;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bubble-link-desc {
+            font-size: 15px;
+            opacity: 0.8;
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        @keyframes glowing-bubble {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* Ultra Dashboard Card */
+        .dashboard-card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 35px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-purple), var(--neon-blue), var(--gold));
+            border-radius: 35px 35px 0 0;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-card-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card-header h3 {
+            font-size: 34px;
+            color: var(--gold);
+            text-shadow: 
+                0 3px 12px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 18px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .dashboard-card-header h3::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .dashboard-card-header p {
+            font-size: 20px;
+            opacity: 0.8;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Ultra Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--hoki-secondary);
+            animation: spin 1.5s ease-in-out infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Ultra Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 30px;
+                max-width: 95%;
+            }
+
+            .header {
+                padding: 45px 30px;
+            }
+
+            .header h1 {
+                font-size: 38px;
+            }
+
+            .dashboard-header h2 {
+                font-size: 46px;
+            }
+
+            .generator-container {
+                padding: 35px;
+            }
+
+            .hoki-generator-container {
+                padding: 45px;
+                margin: 0 30px;
+            }
+
+            .prediction-result, .all-predictions-container {
+                padding: 30px;
+            }
+
+            .bubble-link {
+                width: 170px;
+                height: 170px;
+            }
+
+            .tab-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .tab {
+                margin: 10px 0;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 25px;
+            }
+
+            .header {
+                padding: 35px 25px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .form-container {
+                padding: 35px;
+            }
+
+            .hoki-generator-container {
+                padding: 30px;
+                margin: 0 20px;
+            }
+
+            .hoki-title {
+                font-size: 32px;
+            }
+
+            .hoki-title::before,
+            .hoki-title::after {
+                display: none;
+            }
+
+            .prediction-result {
+                padding: 25px;
+                font-size: 17px;
+            }
+
+            .all-predictions-container {
+                padding: 25px;
+                font-size: 16px;
+            }
+
+            .tab {
+                padding: 18px 30px;
+                font-size: 16px;
+            }
+
+            .prediction-line {
+                flex-direction: column;
+            }
+
+            .prediction-label {
+                min-width: auto;
+                margin-bottom: 10px;
+            }
+
+            .bubble-links-container {
+                gap: 30px;
+            }
+
+            .bubble-link {
+                width: 150px;
+                height: 150px;
+            }
+
+            .bubble-link-icon {
+                font-size: 45px;
+            }
+
+            .bubble-link-text {
+                font-size: 17px;
+            }
+        }
+
+        /* Ultra Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--gold), var(--neon-purple), var(--neon-blue));
+            border-radius: 20px;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--neon-blue), var(--neon-purple), var(--gold));
+            box-shadow: 0 0 25px var(--gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ultra Animated Background -->
+    <div class="animated-bg" id="animatedBg"></div>
+    <div class="particles" id="particles"></div>
+    <div class="aurora" id="aurora">
+        <div class="aurora-layer"></div>
+        <div class="aurora-layer"></div>
+        <div class="aurora-layer"></div>
+    </div>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h1 class="neon-text jungle-theme-text">SIKIK AYA</h1>
+            <p>Premium Prediction System</p>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user-circle"></i> User ID</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Masukkan user ID Anda" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fas fa-key"></i> Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Masukkan password Anda">
+                    <span class="password-toggle" id="passwordToggle">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Masuk ke Sistem Premium
+            </button>
+
+            <p class="login-instruction">Gunakan ID: myprediksi | Password: rahasia123</p>
+
+            <div id="errorMessage" class="message error">
+                <i class="fas fa-exclamation-circle"></i> User ID atau password salah!
+            </div>
+
+            <div id="successMessage" class="message success">
+                <i class="fas fa-check-circle"></i> Login berhasil! Memuat dashboard...
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h2><i class="fas fa-crown"></i> SIKIK AYA PREMIUM</h2>
+            <p>PREDICTION MASTER SYSTEM</p>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Stats Section -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-chart-line"></i> Statistik Prediksi</h3>
+                    <p>Ringkasan aktivitas prediksi premium Anda</p>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Prediksi Hari Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">158</div>
+                        <div class="stat-label">Prediksi Minggu Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">Pasaran Aktif</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">89%</div>
+                        <div class="stat-label">Tingkat Akurasi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <button class="tab active" id="singleTab">Prediksi Per Pasaran</button>
+                <button class="tab" id="allTab">Semua Pasaran</button>
+                <button class="tab hoki-tab" id="hokiTab">HOKIDRAW</button>
+            </div>
+
+            <div class="generator-container" id="singleGenerator">
+                <div class="generator-header">
+                    <h3><i class="fas fa-dice"></i> Generator Prediksi Per Pasaran</h3>
+                </div>
+
+                <select class="pasaran-select" id="pasaranSelect">
+                    <option value="TOTO MACAU PAGI">TOTO MACAU PAGI</option>
+                    <option value="KENTUCKY MIDDAY">KENTUCKY MIDDAY</option>
+                    <option value="FLORIDA MIDDAY">FLORIDA MIDDAY</option>
+                    <option value="HUAHIN 0100">HUAHIN 0100</option>
+                    <option value="BANGKOK 0130">BANGKOK 0130</option>
+                    <option value="NEW YORK MIDDAY">NEW YORK MIDDAY</option>
+                    <option value="NORTH CAROLINA DAY">NORTH CAROLINA DAY</option>
+                    <option value="BRUNEI 02">BRUNEI 02</option>
+                    <option value="OREGON03">OREGON03</option>
+                    <option value="OREGON06">OREGON06</option>
+                    <option value="CALIFORNIA">CALIFORNIA</option>
+                    <option value="FLORIDA EVENING">FLORIDA EVENING</option>
+                    <option value="OREGON09">OREGON09</option>
+                    <option value="BANGKOK 0930">BANGKOK 0930</option>
+                    <option value="NEW YORK EVENING">NEW YORK EVENING</option>
+                    <option value="KENTUCKY EVENING">KENTUCKY EVENING</option>
+                    <option value="CAROLINA EVENING">CAROLINA EVENING</option>
+                    <option value="TOTOCAMBODIA">TOTOCAMBODIA</option>
+                    <option value="CHELSEA 11">CHELSEA 11</option>
+                    <option value="OREGON12">OREGON12</option>
+                    <option value="POIPET12">POIPET12</option>
+                    <option value="TOTO MACAU SIANG">TOTO MACAU SIANG</option>
+                    <option value="BULLSEYE">BULLSEYE</option>
+                    <option value="SYDNEY">SYDNEY</option>
+                    <option value="JAKARTA 1400">JAKARTA 1400</option>
+                    <option value="BRUNEI 14">BRUNEI 14</option>
+                    <option value="CHELSEA 15">CHELSEA 15</option>
+                    <option value="TOTO MACAU 5D SORE">TOTO MACAU 5D SORE</option>
+                    <option value="POIPET15">POIPET15</option>
+                    <option value="TOTOMALI1530">TOTOMALI1530</option>
+                    <option value="TOTO MACAU SORE">TOTO MACAU SORE</option>
+                    <option value="HUAHIN 1630">HUAHIN 1630</option>
+                    <option value="KINGKONG 4D SORE">KINGKONG 4D SORE</option>
+                    <option value="SINGAPORE">SINGAPORE</option>
+                    <option value="MAGNUM4D">MAGNUM4D</option>
+                    <option value="CHELSEA19">CHELSEA19</option>
+                    <option value="TOTO MACAU MALAM I">TOTO MACAU MALAM I</option>
+                    <option value="POIPET19">POIPET19</option>
+                    <option value="PCSO">PCSO</option>
+                    <option value="TOTOMALI2030">TOTOMALI2030</option>
+                    <option value="HUAHIN 2100">HUAHIN 2100</option>
+                    <option value="CHELSEA21">CHELSEA21</option>
+                    <option value="TOTOMACAU 5D MALAM">TOTOMACAU 5D MALAM</option>
+                    <option value="NEVADA">NEVADA</option>
+                    <option value="BRUNEI 21">BRUNEI 21</option>
+                    <option value="TOTOMACAU MALAM II">TOTOMACAU MALAM II</option>
+                    <option value="POIPET22">POIPET22</option>
+                    <option value="HONGKONG">HONGKONG</option>
+                    <option value="TOTO MACAU MALAM III">TOTO MACAU MALAM III</option>
+                    <option value="TOTOMALI2330">TOTOMALI2330</option>
+                    <option value="JAKARTA 2330">JAKARTA 2330</option>
+                    <option value="KINGKONG 4D MALAM">KINGKONG 4D MALAM</option>
+                </select>
+
+                <button class="generate-btn" id="generateBtn">
+                    <i class="fas fa-sync-alt"></i> Generate Prediksi Premium
+                </button>
+
+                <div class="prediction-result" id="predictionResult">
+                    <p style="text-align: center; opacity: 0.7;">Pilih pasaran dan klik Generate untuk melihat prediksi premium</p>
+                </div>
+
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i> Salin Prediksi
+                </button>
+            </div>
+
+            <div class="generator-container" id="allGenerator" style="display: none;">
+                <div class="generator-header">
+                    <h3><i class="fas fa-dice"></i> Generator Semua Pasaran</h3>
+                </div>
+
+                <button class="generate-all-btn" id="generateAllBtn">
+                    <i class="fas fa-sync-alt"></i> Generate Semua Prediksi Premium
+                </button>
+
+                <div class="all-predictions-container" id="allPredictionsContainer">
+                    <p style="text-align: center; opacity: 0.7;">Klik "Generate Semua Prediksi" untuk menampilkan semua prediksi premium</p>
+                </div>
+
+                <button class="copy-all-btn" id="copyAllBtn">
+                    <i class="fas fa-copy"></i> Salin Semua Prediksi
+                </button>
+            </div>
+
+            <!-- HOKIDRAW Generator - ULTRA CANTIK -->
+            <div class="hoki-generator-container" id="hokiGenerator" style="display: none;">
+                <h2 class="hoki-title">Generator Prediksi HOKIDRAW</h2>
+
+                <div class="hoki-select-wrapper">
+                    <select class="hoki-select" id="hokiSelect">
+                        <option value="HOKIDRAW 00:00">HOKIDRAW 00:00</option>
+                        <option value="HOKIDRAW 01:00">HOKIDRAW 01:00</option>
+                        <option value="HOKIDRAW 02:00">HOKIDRAW 02:00</option>
+                        <option value="HOKIDRAW 03:00">HOKIDRAW 03:00</option>
+                        <option value="HOKIDRAW 04:00">HOKIDRAW 04:00</option>
+                        <option value="HOKIDRAW 05:00">HOKIDRAW 05:00</option>
+                        <option value="HOKIDRAW 06:00">HOKIDRAW 06:00</option>
+                        <option value="HOKIDRAW 07:00">HOKIDRAW 07:00</option>
+                        <option value="HOKIDRAW 08:00">HOKIDRAW 08:00</option>
+                        <option value="HOKIDRAW 09:00">HOKIDRAW 09:00</option>
+                        <option value="HOKIDRAW 10:00">HOKIDRAW 10:00</option>
+                        <option value="HOKIDRAW 11:00">HOKIDRAW 11:00</option>
+                        <option value="HOKIDRAW 12:00">HOKIDRAW 12:00</option>
+                        <option value="HOKIDRAW 13:00">HOKIDRAW 13:00</option>
+                        <option value="HOKIDRAW 14:00">HOKIDRAW 14:00</option>
+                        <option value="HOKIDRAW 15:00">HOKIDRAW 15:00</option>
+                        <option value="HOKIDRAW 16:00">HOKIDRAW 16:00</option>
+                        <option value="HOKIDRAW 17:00">HOKIDRAW 17:00</option>
+                        <option value="HOKIDRAW 18:00">HOKIDRAW 18:00</option>
+                        <option value="HOKIDRAW 19:00">HOKIDRAW 19:00</option>
+                        <option value="HOKIDRAW 20:00">HOKIDRAW 20:00</option>
+                        <option value="HOKIDRAW 21:00">HOKIDRAW 21:00</option>
+                        <option value="HOKIDRAW 22:00">HOKIDRAW 22:00</option>
+                        <option value="HOKIDRAW 23:00">HOKIDRAW 23:00</option>
+                    </select>
+                </div>
+
+                <button class="hoki-btn" id="generateHokiBtn">
+                    <i class="fas fa-magic"></i> Generate Prediksi HOKIDRAW
+                </button>
+
+                <button class="hoki-btn" id="generateAllHokiBtn">
+                    <i class="fas fa-layer-group"></i> Generate Semua Prediksi HOKIDRAW
+                </button>
+
+                <div class="hoki-result-container" id="hokiResultContainer">
+                    <p style="text-align: center; opacity: 0.7;">Pilih waktu dan klik Generate untuk melihat prediksi HOKIDRAW</p>
+                </div>
+
+                <button class="hoki-copy-btn" id="copyHokiBtn">
+                    <i class="fas fa-copy"></i> Salin Prediksi
+                </button>
+            </div>
+
+            <!-- Section untuk link-link penting dengan bubble design -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-link"></i> Link Penting Premium</h3>
+                    <p>Akses cepat ke layanan terkait premium</p>
+                </div>
+                <div class="bubble-links-container">
+                    <a href="https://nawalacheck.skiddle.id/" target="_blank" class="bubble-link">
+                        <div class="bubble-link-icon"><i class="fas fa-globe"></i></div>
+                        <div class="bubble-link-text">Status Check</div>
+                        <div class="bubble-link-desc">Cek Status Situs</div>
+                    </a>
+
+                    <a href="https://shoctcutperiode2.vercel.app/qris.html" target="_blank" class="bubble-link">
+                        <div class="bubble-link-icon"><i class="fas fa-qrcode"></i></div>
+                        <div class="bubble-link-text">QRIS Payment</div>
+                        <div class="bubble-link-desc">Pembayaran QRIS</div>
+                    </a>
+
+                    <a href="https://shoctcutperiode2.vercel.app/rrt.html" target="_blank" class="bubble-link">
+                        <div class="bubble-link-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="bubble-link-text">Cek Kesalahan</div>
+                        <div class="bubble-link-desc">Periksa Error</div>
+                    </a>
+
+                    <a href="https://shoctcutperiode2.vercel.app/gambar.html" target="_blank" class="bubble-link">
+                        <div class="bubble-link-icon"><i class="fas fa-image"></i></div>
+                        <div class="bubble-link-text">Koleksi Gambar</div>
+                        <div class="bubble-link-desc">Gambar Unggulan</div>
+                    </a>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Data shio
+        const shios = ['TIKUS', 'KERBAU', 'MACAN', 'KELINCI', 'NAGA', 'ULAR', 'KUDA', 'KAMBING', 'MONYET', 'AYAM', 'ANJING', 'BABI'];
+
+        // Data semua pasaran
+        const semuaPasaran = [
+            "TOTO MACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "BANGKOK 0130",
+            "NEW YORK MIDDAY", "NORTH CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06",
+            "CALIFORNIA", "FLORIDA EVENING", "OREGON09", "BANGKOK 0930", "NEW YORK EVENING",
+            "KENTUCKY EVENING", "CAROLINA EVENING", "TOTOCAMBODIA", "CHELSEA 11", "OREGON12",
+            "POIPET12", "TOTO MACAU SIANG", "BULLSEYE", "SYDNEY", "JAKARTA 1400",
+            "BRUNEI 14", "CHELSEA 15", "TOTO MACAU 5D SORE", "POIPET15", "TOTOMALI1530",
+            "TOTO MACAU SORE", "HUAHIN 1630", "KINGKONG 4D SORE", "SINGAPORE", "MAGNUM4D",
+            "CHELSEA19", "TOTO MACAU MALAM I", "POIPET19", "PCSO", "TOTOMALI2030",
+            "HUAHIN 2100", "CHELSEA21", "TOTOMACAU 5D MALAM", "NEVADA", "BRUNEI 21",
+            "TOTOMACAU MALAM II", "POIPET22", "HONGKONG", "TOTO MACAU MALAM III", "TOTOMALI2330",
+            "JAKARTA 2330", "KINGKONG 4D MALAM"
+        ];
+
+        // Data HOKIDRAW
+        const hokiDrawTimes = [
+            "HOKIDRAW 00:00", "HOKIDRAW 01:00", "HOKIDRAW 02:00", "HOKIDRAW 03:00", "HOKIDRAW 04:00", "HOKIDRAW 05:00",
+            "HOKIDRAW 06:00", "HOKIDRAW 07:00", "HOKIDRAW 08:00", "HOKIDRAW 09:00", "HOKIDRAW 10:00", "HOKIDRAW 11:00",
+            "HOKIDRAW 12:00", "HOKIDRAW 13:00", "HOKIDRAW 14:00", "HOKIDRAW 15:00", "HOKIDRAW 16:00", "HOKIDRAW 17:00",
+            "HOKIDRAW 18:00", "HOKIDRAW 19:00", "HOKIDRAW 20:00", "HOKIDRAW 21:00", "HOKIDRAW 22:00", "HOKIDRAW 23:00"
+        ];
+
+        // Data login pribadi
+        const loginData = {
+            username: "myprediksi",
+            password: "rahasia123"
+        };
+
+        // Fungsi untuk membuat ultra animated background
+        function createAnimatedBackground() {
+            const animatedBg = document.getElementById('animatedBg');
+            for (let i = 0; i < 25; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+
+                // Random size
+                const size = Math.random() * 200 + 100;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+
+                // Random position
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+
+                // Random animation duration
+                const duration = Math.random() * 30 + 20;
+                element.style.animationDuration = `${duration}s`;
+
+                // Random animation delay
+                element.style.animationDelay = `${Math.random() * 15}s`;
+
+                animatedBg.appendChild(element);
+            }
+        }
+
+        // Fungsi untuk membuat particle effect yang lebih advanced
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // Random animation duration
+                const duration = Math.random() * 25 + 15;
+                particle.style.animationDuration = `${duration}s`;
+
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 25}s`;
+
+                // Random size
+                const size = Math.random() * 8 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Fungsi untuk membuat matrix rain effect
+        function createMatrixRain() {
+            const matrixContainer = document.getElementById('matrixRain');
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.classList.add('matrix-column');
+                column.style.left = `${i * 20}px`;
+                
+                // Random content
+                const chars = '01';
+                let content = '';
+                for (let j = 0; j < 20; j++) {
+                    content += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                column.innerHTML = content;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 5;
+                column.style.animationDuration = `${duration}s`;
+                
+                // Random animation delay
+                column.style.animationDelay = `${Math.random() * 10}s`;
+                
+                matrixContainer.appendChild(column);
+            }
+        }
+
+        // Fungsi untuk menampilkan toast notifikasi yang lebih menarik
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 4000);
+        }
+
+        // Fungsi untuk memeriksa status login
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            }
+        }
+
+        // Fungsi untuk menghasilkan angka acak dengan panjang tertentu
+        function generateRandomNumber(length) {
+            return Array.from({length}, () => Math.floor(Math.random() * 10)).join('');
+        }
+
+        // Fungsi untuk menghasilkan prediksi togel dalam format yang diinginkan
+        function generateTogelPrediction(pasaran) {
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+            const day = days[now.getDay()];
+            const date = now.getDate().toString().padStart(2, '0');
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            const bbfs = generateRandomNumber(7);
+            const am = generateRandomNumber(5);
+
+            // Generate 4D numbers
+            const fourD = Array(4).fill().map(() => generateRandomNumber(4)).join(' ');
+
+            // Generate 3D numbers
+            const threeD = Array(4).fill().map(() => generateRandomNumber(3)).join(' ');
+
+            // Generate 2D numbers
+            const twoD = Array(10).fill().map(() => generateRandomNumber(2)).join(' ');
+
+            // Generate colok bebas
+            const colokBebas = `${generateRandomNumber(1)} / ${generateRandomNumber(1)}`;
+
+            // Generate colok bebas 2D
+            const colokBebas2D = Array(3).fill().map(() => generateRandomNumber(2)).join(' / ');
+
+            // Generate twin numbers
+            const twin = Array(3).fill().map(() => {
+                const num = generateRandomNumber(1);
+                return `${num}${num}`;
+            }).join(' / ');
+
+            // Generate random shio
+            const shio = Array(3).fill().map(() => shios[Math.floor(Math.random() * shios.length)]).join(' / ');
+
+            return `Prediksi ${pasaran}
+Hari ${day}, ${date} ${month} ${year}
+BBFS: ${bbfs}
+AM/AI/CK: ${am}
+4D: ${fourD}
+3D: ${threeD}
+2D (BB): ${twoD}
+COLOK BEBAS: ${colokBebas}
+COLOK BEBAS 2D: ${colokBebas2D}
+TWIN: ${twin}
+SHIO: ${shio}
+Selalu Utamakan Prediksi Sendiri`;
+        }
+
+        // Fungsi untuk menampilkan prediksi
+        function displayPrediction(pasaran) {
+            const prediction = generateTogelPrediction(pasaran);
+            const predictionResult = document.getElementById('predictionResult');
+            const copyBtn = document.getElementById('copyBtn');
+
+            // Hapus class background sebelumnya
+            predictionResult.classList.remove('sydney-bg', 'totomacau-bg');
+
+            // Tambahkan class background khusus untuk Sydney
+            if (pasaran === "SYDNEY") {
+                predictionResult.classList.add('sydney-bg');
+            }
+            // Tambahkan class background khusus untuk Toto Macau (kecuali 5D)
+            else if (
+                pasaran.includes("TOTO MACAU") &&
+                !pasaran.includes("5D") &&
+                !pasaran.includes("TOTOMACAU 5D")
+            ) {
+                predictionResult.classList.add('totomacau-bg');
+            }
+
+            // Format teks dengan line breaks
+            const lines = prediction.split('\n');
+            let formattedPrediction = '<div class="prediction-header">';
+
+            // Header dengan nama pasaran
+            formattedPrediction += `<div class="prediction-name">${lines[0]}</div>`;
+            formattedPrediction += `<div class="prediction-date">${lines[1]}</div>`;
+            formattedPrediction += '</div>';
+
+            // Konten prediksi
+            for (let i = 2; i < lines.length; i++) {
+                if (lines[i].trim() !== '') {
+                    const parts = lines[i].split(':');
+                    if (parts.length > 1) {
+                        formattedPrediction += `<div class="prediction-line"><span class="prediction-label">${parts[0]}:</span> <span class="prediction-value">${parts[1]}</span></div>`;
+                    } else {
+                        formattedPrediction += `<div class="prediction-line"><span class="prediction-value">${lines[i]}</span></div>`;
+                    }
+                }
+            }
+
+            predictionResult.innerHTML = formattedPrediction;
+
+            // Tampilkan tombol salin
+            copyBtn.style.display = 'block';
+
+            // Simpan teks prediksi untuk disalin
+            predictionResult.setAttribute('data-prediction', prediction);
+
+            showToast('Prediksi premium berhasil digenerate!');
+        }
+
+        // Fungsi untuk menampilkan semua prediksi
+        function displayAllPredictions() {
+            const allPredictionsContainer = document.getElementById('allPredictionsContainer');
+            const copyAllBtn = document.getElementById('copyAllBtn');
+
+            // Tampilkan loading
+            allPredictionsContainer.innerHTML = '<p style="text-align: center; opacity: 0.7;"><span class="loading-spinner"></span>Sedang memuat semua prediksi premium...</p>';
+            allPredictionsContainer.style.display = 'block';
+
+            // Simulasi loading dengan timeout
+            setTimeout(() => {
+                let allPredictions = '';
+
+                // Generate prediksi untuk setiap pasaran
+                semuaPasaran.forEach(pasaran => {
+                    const prediction = generateTogelPrediction(pasaran);
+                    const lines = prediction.split('\n');
+
+                    // Tambahkan class khusus untuk Sydney
+                    const isSydney = pasaran === "SYDNEY";
+                    const sydneyClass = isSydney ? 'sydney-bg' : '';
+
+                    // Tambahkan class khusus untuk Toto Macau (kecuali 5D)
+                    const isTotoMacau = (
+                        pasaran.includes("TOTO MACAU") &&
+                        !pasaran.includes("5D") &&
+                        !pasaran.includes("TOTOMACAU 5D")
+                    );
+                    const totomacauClass = isTotoMacau ? 'totomacau-bg' : '';
+
+                    let formattedPrediction = `<div class="prediction-item ${sydneyClass} ${totomacauClass}">`;
+                    formattedPrediction += '<div class="prediction-header">';
+                    formattedPrediction += `<div class="prediction-name">${lines[0]}</div>`;
+                    formattedPrediction += `<div class="prediction-date">${lines[1]}</div>`;
+                    formattedPrediction += '</div>';
+
+                    for (let i = 2; i < lines.length; i++) {
+                        if (lines[i].trim() !== '') {
+                            const parts = lines[i].split(':');
+                            if (parts.length > 1) {
+                                formattedPrediction += `<div class="prediction-line"><span class="prediction-label">${parts[0]}:</span> <span class="prediction-value">${parts[1]}</span></div>`;
+                            } else {
+                                formattedPrediction += `<div class="prediction-line"><span class="prediction-value">${lines[i]}</span></div>`;
+                            }
+                        }
+                    }
+
+                    formattedPrediction += '</div>';
+                    allPredictions += formattedPrediction;
+                });
+
+                // Tampilkan semua prediksi
+                allPredictionsContainer.innerHTML = allPredictions;
+
+                // Tampilkan tombol salin semua
+                copyAllBtn.style.display = 'block';
+
+                // Simpan teks semua prediksi untuk disalin
+                allPredictionsContainer.setAttribute('data-all-predictions', semuaPasaran.map(pasaran => generateTogelPrediction(pasaran)).join('\n\n'));
+
+                showToast('Semua prediksi premium berhasil digenerate!');
+            }, 1500);
+        }
+
+        // Fungsi untuk menampilkan prediksi HOKIDRAW
+        function displayHokiPrediction(time) {
+            const prediction = generateTogelPrediction(time);
+            const hokiResultContainer = document.getElementById('hokiResultContainer');
+            const copyHokiBtn = document.getElementById('copyHokiBtn');
+
+            // Format teks dengan line breaks
+            const lines = prediction.split('\n');
+            let formattedPrediction = `<div class="hoki-result-item">`;
+            formattedPrediction += '<div class="hoki-result-header">';
+            formattedPrediction += `<div class="hoki-result-title">${lines[0]}</div>`;
+            formattedPrediction += `<div class="hoki-result-date">${lines[1]}</div>`;
+            formattedPrediction += '</div>';
+
+            formattedPrediction += '<div class="hoki-result-content">';
+
+            // Konten prediksi
+            for (let i = 2; i < lines.length; i++) {
+                if (lines[i].trim() !== '') {
+                    const parts = lines[i].split(':');
+                    if (parts.length > 1) {
+                        formattedPrediction += `<div class="hoki-result-line"><span class="hoki-result-label">${parts[0]}:</span> <span class="hoki-result-value">${parts[1]}</span></div>`;
+                    } else {
+                        formattedPrediction += `<div class="hoki-result-line"><span class="hoki-result-value">${lines[i]}</span></div>`;
+                    }
+                }
+            }
+
+            formattedPrediction += '</div>';
+            formattedPrediction += '</div>';
+
+            hokiResultContainer.innerHTML = formattedPrediction;
+            hokiResultContainer.classList.add('active');
+
+            // Tampilkan tombol salin
+            copyHokiBtn.classList.add('active');
+
+            // Simpan teks prediksi untuk disalin
+            hokiResultContainer.setAttribute('data-prediction', prediction);
+
+            showToast('Prediksi HOKIDRAW berhasil digenerate!');
+        }
+
+        // Fungsi untuk menampilkan semua prediksi HOKIDRAW
+        function displayAllHokiPredictions() {
+            const hokiResultContainer = document.getElementById('hokiResultContainer');
+            const copyHokiBtn = document.getElementById('copyHokiBtn');
+
+            // Tampilkan loading
+            hokiResultContainer.innerHTML = '<p style="text-align: center; opacity: 0.7;"><span class="loading-spinner"></span>Sedang memuat semua prediksi HOKIDRAW...</p>';
+            hokiResultContainer.classList.add('active');
+
+            // Simulasi loading dengan timeout
+            setTimeout(() => {
+                let allPredictions = '';
+
+                // Generate prediksi untuk setiap waktu HOKIDRAW
+                hokiDrawTimes.forEach(time => {
+                    const prediction = generateTogelPrediction(time);
+                    const lines = prediction.split('\n');
+
+                    let formattedPrediction = `<div class="hoki-result-item">`;
+                    formattedPrediction += '<div class="hoki-result-header">';
+                    formattedPrediction += `<div class="hoki-result-title">${lines[0]}</div>`;
+                    formattedPrediction += `<div class="hoki-result-date">${lines[1]}</div>`;
+                    formattedPrediction += '</div>';
+
+                    formattedPrediction += '<div class="hoki-result-content">';
+
+                    for (let i = 2; i < lines.length; i++) {
+                        if (lines[i].trim() !== '') {
+                            const parts = lines[i].split(':');
+                            if (parts.length > 1) {
+                                formattedPrediction += `<div class="hoki-result-line"><span class="hoki-result-label">${parts[0]}:</span> <span class="hoki-result-value">${parts[1]}</span></div>`;
+                            } else {
+                                formattedPrediction += `<div class="hoki-result-line"><span class="hoki-result-value">${lines[i]}</span></div>`;
+                            }
+                        }
+                    }
+
+                    formattedPrediction += '</div>';
+                    formattedPrediction += '</div>';
+                    allPredictions += formattedPrediction;
+                });
+
+                // Tampilkan semua prediksi
+                hokiResultContainer.innerHTML = allPredictions;
+
+                // Tampilkan tombol salin
+                copyHokiBtn.classList.add('active');
+
+                // Simpan teks semua prediksi untuk disalin
+                hokiResultContainer.setAttribute('data-all-predictions', hokiDrawTimes.map(time => generateTogelPrediction(time)).join('\n\n'));
+
+                showToast('Semua prediksi HOKIDRAW berhasil digenerate!');
+            }, 1500);
+        }
+
+        // Fungsi untuk menyalin prediksi ke clipboard
+        function copyPredictionToClipboard() {
+            const predictionText = document.getElementById('predictionResult').getAttribute('data-prediction');
+
+            navigator.clipboard.writeText(predictionText).then(() => {
+                showToast('Prediksi berhasil disalin!');
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+                showToast('Gagal menyalin prediksi. Silakan coba lagi.');
+            });
+        }
+
+        // Fungsi untuk menyalin semua prediksi ke clipboard
+        function copyAllPredictionsToClipboard() {
+            const allPredictionsText = document.getElementById('allPredictionsContainer').getAttribute('data-all-predictions');
+
+            navigator.clipboard.writeText(allPredictionsText).then(() => {
+                showToast('Semua prediksi berhasil disalin!');
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+                showToast('Gagal menyalin semua prediksi. Silakan coba lagi.');
+            });
+        }
+
+        // Fungsi untuk menyalin prediksi HOKIDRAW ke clipboard
+        function copyHokiPredictionToClipboard() {
+            const predictionText = document.getElementById('hokiResultContainer').getAttribute('data-prediction');
+
+            if (!predictionText) {
+                showToast('Tidak ada prediksi untuk disalin!');
+                return;
+            }
+
+            navigator.clipboard.writeText(predictionText).then(() => {
+                showToast('Prediksi HOKIDRAW berhasil disalin!');
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+                showToast('Gagal menyalin prediksi HOKIDRAW. Silakan coba lagi.');
+            });
+        }
+
+        // Fungsi untuk login
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Validasi login
+            if (username === loginData.username && password === loginData.password) {
+                // Tampilkan pesan sukses
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Simpan status login di localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+
+                // Tunggu sebentar lalu tampilkan dashboard
+                setTimeout(function() {
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                }, 2000);
+            } else {
+                // Tampilkan pesan error
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        // Fungsi untuk generate prediksi
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const pasaranSelect = document.getElementById('pasaranSelect');
+            const selectedPasaran = pasaranSelect.value;
+            displayPrediction(selectedPasaran);
+        });
+
+        // Fungsi untuk generate semua prediksi
+        document.getElementById('generateAllBtn').addEventListener('click', displayAllPredictions);
+
+        // Fungsi untuk generate prediksi HOKIDRAW
+        document.getElementById('generateHokiBtn').addEventListener('click', function() {
+            const hokiSelect = document.getElementById('hokiSelect');
+            const selectedTime = hokiSelect.value;
+            displayHokiPrediction(selectedTime);
+        });
+
+        // Fungsi untuk generate semua prediksi HOKIDRAW
+        document.getElementById('generateAllHokiBtn').addEventListener('click', displayAllHokiPredictions);
+
+        // Fungsi untuk menyalin prediksi
+        document.getElementById('copyBtn').addEventListener('click', copyPredictionToClipboard);
+
+        // Fungsi untuk menyalin semua prediksi
+        document.getElementById('copyAllBtn').addEventListener('click', copyAllPredictionsToClipboard);
+
+        // Fungsi untuk menyalin prediksi HOKIDRAW
+        document.getElementById('copyHokiBtn').addEventListener('click', copyHokiPredictionToClipboard);
+
+        // Fungsi untuk logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+
+            // Hapus status login dari localStorage
+            localStorage.removeItem('isLoggedIn');
+
+            // Sembunyikan tombol salin
+            document.getElementById('copyBtn').style.display = 'none';
+            document.getElementById('copyAllBtn').style.display = 'none';
+            document.getElementById('copyHokiBtn').classList.remove('active');
+        });
+
+        // Fitur toggle password
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Fungsi untuk tab
+        document.getElementById('singleTab').addEventListener('click', function() {
+            document.getElementById('singleTab').classList.add('active');
+            document.getElementById('allTab').classList.remove('active');
+            document.getElementById('hokiTab').classList.remove('active');
+            document.getElementById('singleGenerator').style.display = 'block';
+            document.getElementById('allGenerator').style.display = 'none';
+            document.getElementById('hokiGenerator').style.display = 'none';
+        });
+
+        document.getElementById('allTab').addEventListener('click', function() {
+            document.getElementById('allTab').classList.add('active');
+            document.getElementById('singleTab').classList.remove('active');
+            document.getElementById('hokiTab').classList.remove('active');
+            document.getElementById('singleGenerator').style.display = 'none';
+            document.getElementById('allGenerator').style.display = 'block';
+            document.getElementById('hokiGenerator').style.display = 'none';
+        });
+
+        document.getElementById('hokiTab').addEventListener('click', function() {
+            document.getElementById('hokiTab').classList.add('active');
+            document.getElementById('singleTab').classList.remove('active');
+            document.getElementById('allTab').classList.remove('active');
+            document.getElementById('singleGenerator').style.display = 'none';
+            document.getElementById('allGenerator').style.display = 'none';
+            document.getElementById('hokiGenerator').style.display = 'block';
+        });
+
+        // Periksa status login saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            createAnimatedBackground();
+            createParticles();
+            createMatrixRain();
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
